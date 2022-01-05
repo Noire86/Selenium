@@ -64,7 +64,8 @@ public class RGSTest {
         WebElement h2 = driver.findElement(By.xpath("//h2[contains(@class, \"word-breaking title--h2\") and contains(text(), \"Оперативно перезвоним\")]"));
         Assert.assertTrue("Отсутствует заголовок формы ввода данных!", h2.isDisplayed()); //Проверяем наличие формы
 
-
+        //Пауза для того чтобы скролл от кнопки applicationButton сработал правильно и все элементы формы ввода были доступны.
+        //Я не нашел другого способа сделать тест таким же надежным как здесь :(
         try {
             Thread.sleep(1400);
         } catch (InterruptedException e) {
@@ -93,12 +94,13 @@ public class RGSTest {
             }
         }
 
+        //Находим кнопку отправки формы, нажимаем ее.
         WebElement submitButton = driver.findElement(By.xpath("//button[@type=\"submit\"][text()=\"Свяжитесь со мной\"]"));
         wait.until(ExpectedConditions.elementToBeClickable(submitButton));
         scrollToElementJs(submitButton);
         submitButton.click();
 
-
+        //проверка того, что почтовый адрес неверен при отправке формы
         String errorMsg = "Введите корректный адрес электронной почты";
         boolean exists = driver.findElements(By.xpath("//span[contains(@class, 'input__error') and contains(text(), '" + errorMsg + "')]")).isEmpty();
         Assert.assertTrue("Не найдена ошибка ввода почтового адреса!", exists);
@@ -109,7 +111,7 @@ public class RGSTest {
 
     @After
     public void after() {
-       driver.quit();
+        driver.quit();
 
     }
 
@@ -125,9 +127,11 @@ public class RGSTest {
         element.click();
         element.clear();
         element.sendKeys(value);
+
+        //конвертация вводимого номера в масочный формат, т.к атрибут value содержит уже отформатированное значение
         String number = value.replaceFirst("(\\d{3})(\\d{3})(\\d+)", "+7 ($1) $2-$3");
         boolean checkFlag = wait.until(ExpectedConditions.attributeContains(element, "value", number));
-        Assert.assertTrue("Поле было заполнено некорректно", checkFlag);
+        Assert.assertTrue("Поле было заполнено некорректно", checkFlag); //проверка
     }
 
     private void fillInputField(WebElement element, String value) {
