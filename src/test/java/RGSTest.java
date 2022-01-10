@@ -4,14 +4,17 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import ru.ibs.myframework.util.TestUtils;
 
 import java.util.List;
 
 public class RGSTest extends BaseTest {
+    TestUtils utils;
 
     @BeforeEach
     public void before() {
         driver.get("https://rgs.ru");
+        utils = new TestUtils(driver, wait);
     }
 
 
@@ -58,10 +61,10 @@ public class RGSTest extends BaseTest {
 
 
         //Заполняем поля методом со встроенными проверками, для телефона отдельный метод:
-        fillInputField(driver.findElement(By.xpath("//input[contains(@name, \"userName\")]")), "Иванов Иван Иванович");
-        fillInputFieldPhone(driver.findElement(By.xpath("//input[contains(@name, \"userTel\")]")), "9764554546");
-        fillInputField(driver.findElement(By.xpath("//input[contains(@name, \"userEmail\")]")), "qwertyqwerty");
-        fillInputField(driver.findElement(By.xpath("//input[@placeholder=\"Введите\"]")), "Омск");
+        utils.fillInputField(driver.findElement(By.xpath("//input[contains(@name, \"userName\")]")), "Иванов Иван Иванович");
+        utils.fillInputFieldPhone(driver.findElement(By.xpath("//input[contains(@name, \"userTel\")]")), "9764554546");
+        utils.fillInputField(driver.findElement(By.xpath("//input[contains(@name, \"userEmail\")]")), "qwertyqwerty");
+        utils.fillInputField(driver.findElement(By.xpath("//input[@placeholder=\"Введите\"]")), "Омск");
 
 
         //прожимаем чекбокс
@@ -80,7 +83,7 @@ public class RGSTest extends BaseTest {
 
         //Находим кнопку отправки формы, нажимаем ее.
         WebElement submitButton = driver.findElement(By.xpath("//button[@type=\"submit\"][text()=\"Свяжитесь со мной\"]"));
-        scrollToElementJs(submitButton);
+        utils.scrollToElementJs(submitButton);
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[@type=\"submit\"][text()=\"Свяжитесь со мной\"]")));
         wait.until(ExpectedConditions.elementToBeClickable(submitButton));
         submitButton.click();
@@ -100,32 +103,4 @@ public class RGSTest extends BaseTest {
 
     }
 
-    private void scrollToElementJs(WebElement element) {
-        JavascriptExecutor javascriptExecutor = (JavascriptExecutor) driver;
-        javascriptExecutor.executeScript("arguments[0].scrollIntoView(true);", element);
-    }
-
-
-    private void fillInputFieldPhone(WebElement element, String value) {
-        scrollToElementJs(element);
-        wait.until(ExpectedConditions.elementToBeClickable(element));
-        element.click();
-        element.clear();
-        element.sendKeys(value);
-
-        //конвертация вводимого номера в масочный формат, т.к атрибут value содержит уже отформатированное значение
-        String number = value.replaceFirst("(\\d{3})(\\d{3})(\\d+)", "+7 ($1) $2-$3");
-        boolean checkFlag = wait.until(ExpectedConditions.attributeContains(element, "value", number));
-        Assertions.assertTrue(checkFlag, "Поле было заполнено некорректно"); //проверка
-    }
-
-    private void fillInputField(WebElement element, String value) {
-        scrollToElementJs(element);
-        wait.until(ExpectedConditions.elementToBeClickable(element));
-        element.click();
-        element.clear();
-        element.sendKeys(value);
-        boolean checkFlag = wait.until(ExpectedConditions.attributeContains(element, "value", value));
-        Assertions.assertTrue(checkFlag, "Поле было заполнено некорректно");
-    }
 }

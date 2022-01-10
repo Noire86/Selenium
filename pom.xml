@@ -13,6 +13,7 @@
         <java.version>8</java.version>
         <junit-jupiter.version>5.8.2</junit-jupiter.version>
         <selenium-java>3.141.59</selenium-java>
+        <maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
 
 
         <encoding.type>UTF-8</encoding.type>
@@ -45,7 +46,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.0.0-M5</version>
+                <version>${maven-surefire-plugin.version}</version>
             </plugin>
         </plugins>
     </build>
