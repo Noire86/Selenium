@@ -1,31 +1,16 @@
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.openqa.selenium.*;
-import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.opera.OperaDriver;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
-public class RGSTest {
-    WebDriver driver;
-    WebDriverWait wait;
-    Actions actions;
+public class RGSTest extends BaseTest {
 
-
-    @Before
+    @BeforeEach
     public void before() {
-        System.setProperty("webdriver.opera.driver", "src/test/resources/operadriver.exe");
-        driver = new OperaDriver();
-        actions = new Actions(driver);
-        wait = new WebDriverWait(driver, 20, 2000);
-        driver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
-        driver.manage().window().maximize();
         driver.get("https://rgs.ru");
     }
 
@@ -38,7 +23,7 @@ public class RGSTest {
         companiesButton.click(); //кликаем
 
         wait.until(ExpectedConditions.titleContains("компаний")); //Проверяем изменился ли заголовок после нажатия кнопки Компании
-        Assert.assertEquals("Страхование компаний и юридических лиц | Росгосстрах", driver.getTitle()); //Проверка на корректность заголовка страницы
+        Assertions.assertEquals("Страхование компаний и юридических лиц | Росгосстрах", driver.getTitle()); //Проверка на корректность заголовка страницы
 
 
         WebElement healthButton = driver.findElement(By.xpath("//span[contains(text(), 'Здоровье') and contains(@class, 'padding')]")); //обнаружили кнопку Здоровье
@@ -49,11 +34,11 @@ public class RGSTest {
         WebElement dms = driver.findElement(By.xpath("//a[contains(@href, \"dobrovolnoe\")]")); //Обнаруживаем кнопку из меню Здоровье
         wait.until(ExpectedConditions.elementToBeClickable(dms)); //Дополнительная проверка на всякий случай
         wait.until(ExpectedConditions.visibilityOf(dms));
-        Assert.assertTrue("Не отображено!", dms.isDisplayed()); // Проверяем открылось ли окно Здоровье, а так же видимость пункта ДМС (2 в 1)
+        Assertions.assertTrue(dms.isDisplayed(), "Не отображено!"); // Проверяем открылось ли окно Здоровье, а так же видимость пункта ДМС (2 в 1)
         dms.click(); //клац
 
         wait.until(ExpectedConditions.titleContains("Добровольное")); //Ждем пока заголовок не изменится на новый
-        Assert.assertEquals("Добровольное медицинское страхование для компаний и юридических лиц в Росгосстрахе", driver.getTitle()); //Верифицируем заголовок
+        Assertions.assertEquals("Добровольное медицинское страхование для компаний и юридических лиц в Росгосстрахе", driver.getTitle()); //Верифицируем заголовок
 
 
         String appButtonXPath = "//button[contains(@class, \"action-item btn--basic\")]//span[contains(text(), \"Отправить заявку\")]";
@@ -62,12 +47,11 @@ public class RGSTest {
         applicationButton.click(); //клац
 
         WebElement h2 = driver.findElement(By.xpath("//h2[contains(@class, \"word-breaking title--h2\") and contains(text(), \"Оперативно перезвоним\")]"));
-        Assert.assertTrue("Отсутствует заголовок формы ввода данных!", h2.isDisplayed()); //Проверяем наличие формы
+        Assertions.assertTrue(h2.isDisplayed(), "Отсутствует заголовок формы ввода данных!"); //Проверяем наличие формы
 
-        //Пауза для того чтобы скролл от кнопки applicationButton сработал правильно и все элементы формы ввода были доступны.
-        //Я не нашел другого способа сделать тест таким же надежным как здесь :(
+
         try {
-            Thread.sleep(1400);
+            Thread.sleep(1600);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -96,20 +80,21 @@ public class RGSTest {
 
         //Находим кнопку отправки формы, нажимаем ее.
         WebElement submitButton = driver.findElement(By.xpath("//button[@type=\"submit\"][text()=\"Свяжитесь со мной\"]"));
-        wait.until(ExpectedConditions.elementToBeClickable(submitButton));
         scrollToElementJs(submitButton);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[@type=\"submit\"][text()=\"Свяжитесь со мной\"]")));
+        wait.until(ExpectedConditions.elementToBeClickable(submitButton));
         submitButton.click();
 
         //проверка того, что почтовый адрес неверен при отправке формы
         String errorMsg = "Введите корректный адрес электронной почты";
         boolean exists = driver.findElements(By.xpath("//span[contains(@class, 'input__error') and contains(text(), '" + errorMsg + "')]")).isEmpty();
-        Assert.assertTrue("Не найдена ошибка ввода почтового адреса!", exists);
+        Assertions.assertTrue(exists, "Не найдена ошибка ввода почтового адреса!");
 
 
     }
 
 
-    @After
+    @AfterEach
     public void after() {
         driver.quit();
 
@@ -131,7 +116,7 @@ public class RGSTest {
         //конвертация вводимого номера в масочный формат, т.к атрибут value содержит уже отформатированное значение
         String number = value.replaceFirst("(\\d{3})(\\d{3})(\\d+)", "+7 ($1) $2-$3");
         boolean checkFlag = wait.until(ExpectedConditions.attributeContains(element, "value", number));
-        Assert.assertTrue("Поле было заполнено некорректно", checkFlag); //проверка
+        Assertions.assertTrue(checkFlag, "Поле было заполнено некорректно"); //проверка
     }
 
     private void fillInputField(WebElement element, String value) {
@@ -141,6 +126,6 @@ public class RGSTest {
         element.clear();
         element.sendKeys(value);
         boolean checkFlag = wait.until(ExpectedConditions.attributeContains(element, "value", value));
-        Assert.assertTrue("Поле было заполнено некорректно", checkFlag);
+        Assertions.assertTrue(checkFlag, "Поле было заполнено некорректно");
     }
 }
