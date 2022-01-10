@@ -5,6 +5,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.opera.OperaDriver;
 
+//утилитарный метод выбора нужного драйвера
+
 public class DriverUtils {
     public static WebDriver getAnyDriver(String browser) {
 

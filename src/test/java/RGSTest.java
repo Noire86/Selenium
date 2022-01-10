@@ -79,8 +79,11 @@ public class RGSTest extends BaseTest {
 
         //проверка того, что почтовый адрес неверен при отправке формы
         String errorMsg = "Введите корректный адрес электронной почты";
-        boolean exists = driver.findElements(By.xpath("//span[contains(@class, 'input__error') and contains(text(), '" + errorMsg + "')]")).isEmpty();
-        Assertions.assertTrue(exists, "Не найдена ошибка ввода почтового адреса!");
+        String errorFieldXPath = "//input[contains(@name, \"userEmail\")]/../../span[contains(@class, 'input__error')]";
+
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(errorFieldXPath)));
+        WebElement errorField = driver.findElement(By.xpath(errorFieldXPath));
+        Assertions.assertEquals(errorMsg, errorField.getText());
 
     }
 

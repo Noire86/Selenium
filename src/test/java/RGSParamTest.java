@@ -1,7 +1,6 @@
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
-import org.junit.jupiter.params.provider.CsvSource;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -9,11 +8,11 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import java.util.List;
 
 public class RGSParamTest extends BaseTest {
-
+    //настройки параметризированного теста, установлен DisplayName и указан источник параметров в виде csv файла
     @ParameterizedTest
     @DisplayName("RGS parametrized test")
     @CsvFileSource(resources = "fields.csv")
-    public void test(String name, String phone, String email, String region) {
+    public void test(String name, String phone, String email, String region) { //укажем какие параметры мы должны передавать при каждой итерации
         //выбираем категорию Компаниям
         WebElement companiesButton = driver.findElement(By.xpath("//a[@href='/for-companies']")); //обнаружили элемент
         wait.until(ExpectedConditions.elementToBeClickable(companiesButton));
@@ -52,7 +51,7 @@ public class RGSParamTest extends BaseTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
+        //Подставляем аргументы из параметризации
         //Заполняем поля методом со встроенными проверками, для телефона отдельный метод:
         utils.fillInputField(driver.findElement(By.xpath("//input[contains(@name, \"userName\")]")), name);
         utils.fillInputFieldPhone(driver.findElement(By.xpath("//input[contains(@name, \"userTel\")]")), phone);
@@ -83,8 +82,11 @@ public class RGSParamTest extends BaseTest {
 
         //проверка того, что почтовый адрес неверен при отправке формы
         String errorMsg = "Введите корректный адрес электронной почты";
-        boolean exists = driver.findElements(By.xpath("//span[contains(@class, 'input__error') and contains(text(), '" + errorMsg + "')]")).isEmpty();
-        Assertions.assertTrue(exists, "Не найдена ошибка ввода почтового адреса!");
+        String errorFieldXPath = "//input[contains(@name, \"userEmail\")]/../../span[contains(@class, 'input__error')]";
+
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(errorFieldXPath)));
+        WebElement errorField = driver.findElement(By.xpath(errorFieldXPath));
+        Assertions.assertEquals(errorMsg, errorField.getText());
 
 
     }

@@ -8,9 +8,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import ru.ibs.myframework.util.DriverUtils;
 import ru.ibs.myframework.util.TestUtils;
 
-
+//базовый класс для тестов
 public class BaseTest {
-
+    //объявления полей
     static WebDriver driver;
     static WebDriverWait wait;
     static Actions actions;
@@ -23,7 +23,7 @@ public class BaseTest {
     }
 
     @BeforeEach
-    void beforeEach() {
+    void beforeEach() { //все что нужно для нормальной работы каждой итерации теста
         driver = DriverUtils.getAnyDriver(System.getProperty("browser", "opera"));
         wait = new WebDriverWait(driver, 20, 2500);
         actions = new Actions(driver);
@@ -35,7 +35,7 @@ public class BaseTest {
 
     @AfterEach
     void afterEach() {
-        driver.quit();
+        driver.quit(); //закроем драйвер
 
     }
 

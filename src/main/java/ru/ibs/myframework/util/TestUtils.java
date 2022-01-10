@@ -7,9 +7,13 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+//Все утилиты для работы внутри теста перенесены сюда
+//вызывается объект этого класса с передачей в него обьектов WebDriver и WebDriverWait
+
 public class TestUtils {
-    private WebDriver driver;
-    private WebDriverWait wait;
+
+    private final WebDriver driver;
+    private final WebDriverWait wait;
 
     public TestUtils(WebDriver driver, WebDriverWait wait) {
         this.driver = driver;
