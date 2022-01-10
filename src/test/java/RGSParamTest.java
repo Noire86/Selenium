@@ -1,14 +1,22 @@
 import org.junit.jupiter.api.*;
-import org.openqa.selenium.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.List;
 
-public class RGSTest extends BaseTest {
+public class RGSParamTest extends BaseTest {
 
-    @Test
-    @DisplayName("RGS insurance query-form test")
-    public void test() {
+    @ParameterizedTest
+    @DisplayName("RGS parametrized test")
+    @CsvSource({
+            "Иванов Василий Петрович, 56856846, qwertyytrewq, Орск",
+            "Сергеев Сергей Сергеевич, 9678653434, qwertymail, Уфа",
+            "Дмитриев Дмитрий Дмитриевич, 9455679898, qwertybadmail, Пенза"
+    })
+    public void test(String name, String phone, String email, String region) {
         //выбираем категорию Компаниям
         WebElement companiesButton = driver.findElement(By.xpath("//a[@href='/for-companies']")); //обнаружили элемент
         wait.until(ExpectedConditions.elementToBeClickable(companiesButton));
@@ -48,12 +56,11 @@ public class RGSTest extends BaseTest {
             e.printStackTrace();
         }
 
-
         //Заполняем поля методом со встроенными проверками, для телефона отдельный метод:
-        utils.fillInputField(driver.findElement(By.xpath("//input[contains(@name, \"userName\")]")), "Иванов Иван Иванович");
-        utils.fillInputFieldPhone(driver.findElement(By.xpath("//input[contains(@name, \"userTel\")]")), "9764554546");
-        utils.fillInputField(driver.findElement(By.xpath("//input[contains(@name, \"userEmail\")]")), "qwertyqwerty");
-        utils.fillInputField(driver.findElement(By.xpath("//input[@placeholder=\"Введите\"]")), "Омск");
+        utils.fillInputField(driver.findElement(By.xpath("//input[contains(@name, \"userName\")]")), name);
+        utils.fillInputFieldPhone(driver.findElement(By.xpath("//input[contains(@name, \"userTel\")]")), phone);
+        utils.fillInputField(driver.findElement(By.xpath("//input[contains(@name, \"userEmail\")]")), email);
+        utils.fillInputField(driver.findElement(By.xpath("//input[@placeholder=\"Введите\"]")), region);
 
 
         //прожимаем чекбокс
@@ -81,6 +88,7 @@ public class RGSTest extends BaseTest {
         String errorMsg = "Введите корректный адрес электронной почты";
         boolean exists = driver.findElements(By.xpath("//span[contains(@class, 'input__error') and contains(text(), '" + errorMsg + "')]")).isEmpty();
         Assertions.assertTrue(exists, "Не найдена ошибка ввода почтового адреса!");
+
 
     }
 
