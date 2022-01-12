@@ -15,6 +15,7 @@ public class Base {
 
     @BeforeEach
     void beforeEach() {
+        driverManager.getDriver().manage().deleteAllCookies();
         driverManager.getDriver().get("https://rgs.ru");
     }
 
