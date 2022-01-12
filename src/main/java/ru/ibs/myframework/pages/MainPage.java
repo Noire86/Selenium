@@ -20,6 +20,6 @@ public class MainPage extends BasePage {
 
 
     public void selectNavMenu(String btnText) {
-        pageUtils.selectItemFromList(btnText, navMenu);
+        pageUtils.clickItemFromList(btnText, navMenu);
     }
 }

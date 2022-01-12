@@ -34,7 +34,7 @@ public class PageUtils {
                 .perform();
     }
 
-    public WebElement selectItemFromList(String value, List<WebElement> list) {
+    public WebElement clickItemFromList(String value, List<WebElement> list) {
         for (WebElement item : list) {
             if (item.getText().contains(value)) {
                 wait.until(ExpectedConditions.visibilityOf(item));
@@ -98,7 +98,7 @@ public class PageUtils {
         }
     }
 
-    public WebElement getElementByAttributeFromList(String attribute, String value, List<WebElement> list) {
+    public WebElement getElementByAttribute(String attribute, String value, List<WebElement> list) {
         for (WebElement el : list) {
             if (el.getAttribute(attribute).equals(value)) {
                 return el;

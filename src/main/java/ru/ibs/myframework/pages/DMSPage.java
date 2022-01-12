@@ -46,7 +46,7 @@ public class DMSPage extends BasePage {
     }
 
     public void clickFieldViaActions(String placeholder){
-        WebElement el = pageUtils.getElementByAttributeFromList("placeholder", placeholder, inputList);
+        WebElement el = pageUtils.getElementByAttribute("placeholder", placeholder, inputList);
         pageUtils.clickViaActions(el);
     }
 
@@ -60,15 +60,15 @@ public class DMSPage extends BasePage {
 
     public void selectRegionItem(String region) {
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//input[@placeholder=\"Введите\"]/../../..//span")));
-        pageUtils.selectItemFromList(region, regionList);
+        pageUtils.clickItemFromList(region, regionList);
     }
 
     public void fillInputField(String placeholder, String value) {
 
         if (placeholder.equals("userTel")) {
-            pageUtils.fillInputPhone(pageUtils.getElementByAttributeFromList("placeholder", placeholder, inputList), value);
+            pageUtils.fillInputPhone(pageUtils.getElementByAttribute("placeholder", placeholder, inputList), value);
         } else {
-            pageUtils.fillInput(pageUtils.getElementByAttributeFromList("placeholder", placeholder, inputList), value);
+            pageUtils.fillInput(pageUtils.getElementByAttribute("placeholder", placeholder, inputList), value);
         }
     }
 

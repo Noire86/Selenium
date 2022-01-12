@@ -24,11 +24,11 @@ public class CompaniesPage extends BasePage {
 
 
     public void selectBaseMenuButton(String btnText) {
-        pageUtils.selectItemFromList(btnText, baseMenu);
+        pageUtils.clickItemFromList(btnText, baseMenu);
     }
 
     public void selectHealthMenuButton(String btnText) {
-        pageUtils.selectItemFromList(btnText, healthMenu);
+        pageUtils.clickItemFromList(btnText, healthMenu);
     }
 
     public void checkCompaniesPageTitle(String contains, String expectedTitle) {
