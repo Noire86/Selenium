@@ -11,20 +11,19 @@ import ru.ibs.myframework.pages.DMSPage;
 import ru.ibs.myframework.pages.MainPage;
 import ru.ibs.myframework.util.DriverUtils;
 
-//базовый класс для тестов
 public class Base {
-    //объявления полей
-    protected static WebDriver driver;
-    protected static WebDriverWait wait;
-    protected static MainPage mainPage;
-    protected static CompaniesPage companiesPage;
-    protected static DMSPage dmsPage;
+
+    protected WebDriver driver;
+    protected WebDriverWait wait;
+    protected MainPage mainPage;
+    protected CompaniesPage companiesPage;
+    protected DMSPage dmsPage;
 
     @BeforeAll
     static void beforeAll() {}
 
     @BeforeEach
-    void beforeEach() { //все что нужно для нормальной работы каждой итерации теста
+    void beforeEach() {
         driver = DriverUtils.getAnyDriver(System.getProperty("browser", "opera"));
         wait = new WebDriverWait(driver, 20, 2500);
 

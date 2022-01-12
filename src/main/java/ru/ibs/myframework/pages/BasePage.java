@@ -5,9 +5,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import ru.ibs.myframework.util.pageutils.PageUtils;
 
 public class BasePage {
-    WebDriver driver;
-    WebDriverWait wait;
-    PageUtils pageUtils;
+    protected WebDriver driver;
+    protected WebDriverWait wait;
+    protected PageUtils pageUtils;
 
 
     public BasePage(WebDriver driver, WebDriverWait wait) {
