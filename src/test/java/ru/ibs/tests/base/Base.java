@@ -9,29 +9,17 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import ru.ibs.myframework.pages.CompaniesPage;
 import ru.ibs.myframework.pages.DMSPage;
 import ru.ibs.myframework.pages.MainPage;
-import ru.ibs.myframework.util.DriverUtils;
+import ru.ibs.myframework.util.DriverManager;
 
 public class Base {
 
-    protected WebDriver driver;
-    protected WebDriverWait wait;
-    protected MainPage mainPage;
-    protected CompaniesPage companiesPage;
-    protected DMSPage dmsPage;
+    private WebDriver driver = DriverManager.getInstance().getDriver();
 
     @BeforeAll
     static void beforeAll() {}
 
     @BeforeEach
     void beforeEach() {
-        driver = DriverUtils.getAnyDriver(System.getProperty("browser", "opera"));
-        wait = new WebDriverWait(driver, 20, 2500);
-
-        mainPage = new MainPage(driver, wait);
-        companiesPage = new CompaniesPage(driver, wait);
-        dmsPage = new DMSPage(driver, wait);
-
-        driver.manage().window().maximize();
         driver.get("https://rgs.ru");
     }
 

@@ -9,6 +9,10 @@ import ru.ibs.tests.base.Base;
 
 public class RGSTest extends Base {
 
+    private final MainPage mainPage = new MainPage();
+    private final CompaniesPage companiesPage = new CompaniesPage();
+    private final DMSPage dmsPage = new DMSPage();
+
     @Test
     @DisplayName("RGS insurance query-form test")
     public void test() {
