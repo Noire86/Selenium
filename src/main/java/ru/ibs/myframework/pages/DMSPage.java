@@ -34,29 +34,29 @@ public class DMSPage extends BasePage {
 
     public DMSPage clickApplicationButton() {
         pageUtils.click(applicationButton);
-        return this;
+        return pageManager.getDMSPage();
     }
 
     public DMSPage clickFieldViaActions(String placeholder){
         WebElement el = pageUtils.getElementByAttribute("placeholder", placeholder, inputList);
         pageUtils.clickViaActions(el);
-        return this;
+        return pageManager.getDMSPage();
     }
 
     public DMSPage clickSubmitButton() {
         pageUtils.click(submitButton);
-        return this;
+        return pageManager.getDMSPage();
     }
 
     public DMSPage selectCheckbox() {
         pageUtils.clickViaActions(checkbox);
-        return this;
+        return pageManager.getDMSPage();
     }
 
     public DMSPage selectRegionItem(String region) {
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//input[@placeholder=\"Введите\"]/../../..//span")));
         pageUtils.clickItemFromList(region, regionList);
-        return this;
+        return pageManager.getDMSPage();
     }
 
     public DMSPage fillInputField(String placeholder, String value) {
@@ -66,27 +66,27 @@ public class DMSPage extends BasePage {
         } else {
             pageUtils.fillInput(pageUtils.getElementByAttribute("placeholder", placeholder, inputList), value);
         }
-        return this;
+        return pageManager.getDMSPage();
     }
 
     public DMSPage checkDMSTitle(String contains, String expectedTitle) {
         pageUtils.assertTitle(contains, expectedTitle);
-        return this;
+        return pageManager.getDMSPage();
     }
 
     public DMSPage checkH2Title(String h2Text, String assertMsg) {
         pageUtils.assertElementVisibility(h2, h2Text, assertMsg);
-        return this;
+        return pageManager.getDMSPage();
     }
 
     public DMSPage checkError(String errorMsg) {
         pageUtils.assertErrorField(emailError, errorMsg);
-        return this;
+        return pageManager.getDMSPage();
     }
 
     public DMSPage scrollToSubmit() {
         pageUtils.scrollJS(submitButton);
-        return this;
+        return pageManager.getDMSPage();
     }
 
 }

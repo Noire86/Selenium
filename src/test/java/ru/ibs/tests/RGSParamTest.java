@@ -12,21 +12,18 @@ import ru.ibs.tests.base.Base;
 
 public class RGSParamTest extends Base {
 
-    private final PageManager pageManager = PageManager.getInstance();
-
     @ParameterizedTest
     @DisplayName("RGS parametrized test")
     @CsvFileSource(resources = "fields.csv")
     public void test(String name, String phone, String email, String region) { //укажем какие параметры мы должны передавать при каждой итерации
 
 
-        pageManager.getMainPage().selectNavMenu("Компаниям"); //клик по компаниям
-
-        pageManager.getCompaniesPage().checkCompaniesPageTitle("компаний", "Страхование компаний и юридических лиц | Росгосстрах")
+        PageManager.getInstance().getMainPage()
+                .selectNavMenu("Компаниям")
+                .checkCompaniesPageTitle("компаний", "Страхование компаний и юридических лиц | Росгосстрах")
                 .selectBaseMenuButton("Здоровье")
-                .selectHealthMenuButton("Добровольное медицинское страхование");
-
-        pageManager.getDMSPage().checkDMSTitle("Добровольное", "Добровольное медицинское страхование для компаний и юридических лиц в Росгосстрахе")
+                .selectHealthMenuButton("Добровольное медицинское страхование")
+                .checkDMSTitle("Добровольное", "Добровольное медицинское страхование для компаний и юридических лиц в Росгосстрахе")
                 .clickApplicationButton()
                 .checkH2Title("Оперативно позвоним", "Отсутствует заголовок формы ввода данных!");
 
@@ -37,7 +34,7 @@ public class RGSParamTest extends Base {
             e.printStackTrace();
         }
 
-        pageManager.getDMSPage()
+        PageManager.getInstance().getDMSPage()
                 .fillInputField("Иванов Иван Иванович", name)
                 .fillInputField("+7 XXX XXX XX XX", phone)
                 .fillInputField("hello@email.com", email)

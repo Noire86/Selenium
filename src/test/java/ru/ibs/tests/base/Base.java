@@ -5,6 +5,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import ru.ibs.myframework.managers.DriverManager;
+import ru.ibs.myframework.managers.PageManager;
 
 public class Base {
 

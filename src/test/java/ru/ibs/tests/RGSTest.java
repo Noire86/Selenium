@@ -10,19 +10,15 @@ import ru.ibs.tests.base.Base;
 
 public class RGSTest extends Base {
 
-    private final PageManager pageManager = PageManager.getInstance();
-
     @Test
     @DisplayName("RGS insurance query-form test")
     public void test() {
 
-        pageManager.getMainPage().selectNavMenu("Компаниям"); //клик по компаниям
-
-        pageManager.getCompaniesPage().checkCompaniesPageTitle("компаний", "Страхование компаний и юридических лиц | Росгосстрах")
+        PageManager.getInstance().getMainPage().selectNavMenu("Компаниям")
+                .checkCompaniesPageTitle("компаний", "Страхование компаний и юридических лиц | Росгосстрах")
                 .selectBaseMenuButton("Здоровье")
-                .selectHealthMenuButton("Добровольное медицинское страхование");
-
-        pageManager.getDMSPage().checkDMSTitle("Добровольное", "Добровольное медицинское страхование для компаний и юридических лиц в Росгосстрахе")
+                .selectHealthMenuButton("Добровольное медицинское страхование")
+                .checkDMSTitle("Добровольное", "Добровольное медицинское страхование для компаний и юридических лиц в Росгосстрахе")
                 .clickApplicationButton()
                 .checkH2Title("Оперативно позвоним", "Отсутствует заголовок формы ввода данных!");
 
@@ -33,7 +29,7 @@ public class RGSTest extends Base {
             e.printStackTrace();
         }
 
-        pageManager.getDMSPage()
+        PageManager.getInstance().getDMSPage()
                 .fillInputField("Иванов Иван Иванович", "Иванов Иван Иванович")
                 .fillInputField("+7 XXX XXX XX XX", "9764554546")
                 .fillInputField("hello@email.com", "qwertyqwerty")

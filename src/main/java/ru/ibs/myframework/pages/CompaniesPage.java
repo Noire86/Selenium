@@ -16,16 +16,16 @@ public class CompaniesPage extends BasePage {
 
     public CompaniesPage selectBaseMenuButton(String btnText) {
         pageUtils.clickItemFromList(btnText, baseMenu);
-        return this;
+        return pageManager.getCompaniesPage();
     }
 
-    public CompaniesPage selectHealthMenuButton(String btnText) {
+    public DMSPage selectHealthMenuButton(String btnText) {
         pageUtils.clickItemFromList(btnText, healthMenu);
-        return this;
+        return pageManager.getDMSPage();
     }
 
     public CompaniesPage checkCompaniesPageTitle(String contains, String expectedTitle) {
         pageUtils.assertTitle(contains, expectedTitle);
-        return this;
+        return pageManager.getCompaniesPage();
     }
 }

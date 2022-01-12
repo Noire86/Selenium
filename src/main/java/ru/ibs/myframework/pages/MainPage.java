@@ -10,7 +10,8 @@ public class MainPage extends BasePage {
     @FindBy(xpath = "//nav[@class=\"navigation\"]//a[contains(@class, text--second)]")
     private List<WebElement> navMenu;
 
-    public void selectNavMenu(String btnText) {
+    public CompaniesPage selectNavMenu(String btnText) {
         pageUtils.clickItemFromList(btnText, navMenu);
+        return pageManager.getCompaniesPage();
     }
 }
