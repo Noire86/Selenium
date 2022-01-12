@@ -1,7 +1,6 @@
-package ru.ibs.myframework.util;
+package ru.ibs.myframework.util.pageutils;
 
 import org.junit.jupiter.api.Assertions;
-import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -35,16 +34,17 @@ public class PageUtils {
                 .perform();
     }
 
-    public void selectItemFromList(String value, List<WebElement> list) {
+    public WebElement selectItemFromList(String value, List<WebElement> list) {
         for (WebElement item : list) {
             if (item.getText().contains(value)) {
-                wait.until(ExpectedConditions.elementToBeClickable(item));
                 wait.until(ExpectedConditions.visibilityOf(item));
+                wait.until(ExpectedConditions.elementToBeClickable(item));
                 item.click();
-                return;
+                return item;
             }
         }
        Assertions.fail("No button with name " + value + " were found ");
+        return null;
     }
 
     public void fillInput(WebElement element, String value) {
@@ -96,6 +96,15 @@ public class PageUtils {
                 return;
             }
         }
+    }
+
+    public WebElement getElementByAttributeFromList(String attribute, String value, List<WebElement> list) {
+        for (WebElement el : list) {
+            if (el.getAttribute(attribute).equals(value)) {
+                return el;
+            }
+        }
+        return null;
     }
 
 

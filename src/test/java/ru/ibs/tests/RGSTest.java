@@ -14,20 +14,11 @@ public class RGSTest extends Base {
     public void test() {
 
         mainPage.selectNavMenu("Компаниям"); //клик по компаниям
-
-
         companiesPage.checkCompaniesPageTitle("компаний", "Страхование компаний и юридических лиц | Росгосстрах");
-
-
         companiesPage.selectBaseMenuButton("Здоровье");
-
         companiesPage.selectHealthMenuButton("Добровольное медицинское страхование");
-
         dmsPage.checkDMSTitle("Добровольное", "Добровольное медицинское страхование для компаний и юридических лиц в Росгосстрахе");
-
-
         dmsPage.clickApplicationButton();
-
         dmsPage.checkH2Title("Оперативно позвоним", "Отсутствует заголовок формы ввода данных!");
 
 
@@ -37,13 +28,16 @@ public class RGSTest extends Base {
             e.printStackTrace();
         }
 
-        dmsPage.fillInput("Иванов Иван Иванович", "Иванов Иван Иванович");
-        dmsPage.fillInput("+7 XXX XXX XX XX", "9764554546");
-        dmsPage.fillInput("hello@email.com", "qwertyqwerty");
-        dmsPage.fillInput("Введите", "Омск");
+        dmsPage.fillInputField("Иванов Иван Иванович", "Иванов Иван Иванович");
+        dmsPage.fillInputField("+7 XXX XXX XX XX", "9764554546");
+        dmsPage.fillInputField("hello@email.com", "qwertyqwerty");
+        dmsPage.fillInputField("Введите", "Омск");
         dmsPage.selectCheckbox();
 
+        dmsPage.clickFieldViaActions("Введите");
+
         dmsPage.selectRegionItem("г Омск");
+
 
         dmsPage.scrollToSubmit();
         dmsPage.clickSubmitButton();

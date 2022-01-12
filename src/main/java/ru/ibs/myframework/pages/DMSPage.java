@@ -1,9 +1,11 @@
 package ru.ibs.myframework.pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
@@ -39,6 +41,36 @@ public class DMSPage extends BasePage {
         PageFactory.initElements(driver, this);
     }
 
+    public void clickApplicationButton() {
+        pageUtils.click(applicationButton);
+    }
+
+    public void clickFieldViaActions(String placeholder){
+        WebElement el = pageUtils.getElementByAttributeFromList("placeholder", placeholder, inputList);
+        pageUtils.clickViaActions(el);
+    }
+
+    public void clickSubmitButton() {
+        pageUtils.click(submitButton);
+    }
+
+    public void selectCheckbox() {
+        pageUtils.clickViaActions(checkbox);
+    }
+
+    public void selectRegionItem(String region) {
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//input[@placeholder=\"Введите\"]/../../..//span")));
+        pageUtils.selectItemFromList(region, regionList);
+    }
+
+    public void fillInputField(String placeholder, String value) {
+
+        if (placeholder.equals("userTel")) {
+            pageUtils.fillInputPhone(pageUtils.getElementByAttributeFromList("placeholder", placeholder, inputList), value);
+        } else {
+            pageUtils.fillInput(pageUtils.getElementByAttributeFromList("placeholder", placeholder, inputList), value);
+        }
+    }
 
     public void checkDMSTitle(String contains, String expectedTitle) {
         pageUtils.assertTitle(contains, expectedTitle);
@@ -52,39 +84,8 @@ public class DMSPage extends BasePage {
         pageUtils.assertErrorField(emailError, errorMsg);
     }
 
-    public void clickApplicationButton() {
-        pageUtils.click(applicationButton);
-    }
-
-
-    public void clickSubmitButton() {
-        pageUtils.click(submitButton);
-    }
-
-
-    public void selectCheckbox() {
-        pageUtils.clickViaActions(checkbox);
-    }
-
-    public void selectRegionItem(String region) {
-        System.out.println(regionList);
-        pageUtils.selectItemFromList(region, regionList);
-    }
-
     public void scrollToSubmit() {
         pageUtils.scrollJS(submitButton);
     }
 
-    public void fillInput(String placeholder, String value) {
-
-        String property = "placeholder";
-
-        for (WebElement e : inputList) {
-            if (e.getAttribute(property).equals(placeholder)) {
-                pageUtils.fillInput(e, value);
-            } else if (e.getAttribute(property).equals("userTel")) {
-                pageUtils.fillInputPhone(e, value);
-            }
-        }
-    }
 }

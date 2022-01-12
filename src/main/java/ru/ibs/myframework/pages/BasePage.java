@@ -2,7 +2,7 @@ package ru.ibs.myframework.pages;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import ru.ibs.myframework.util.PageUtils;
+import ru.ibs.myframework.util.pageutils.PageUtils;
 
 public class BasePage {
     WebDriver driver;
