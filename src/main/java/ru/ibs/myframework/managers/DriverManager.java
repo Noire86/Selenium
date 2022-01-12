@@ -1,4 +1,4 @@
-package ru.ibs.myframework.util;
+package ru.ibs.myframework.managers;
 
 import org.apache.commons.exec.OS;
 import org.openqa.selenium.WebDriver;
@@ -10,7 +10,7 @@ import org.openqa.selenium.opera.OperaDriver;
 public class DriverManager {
 
     private static DriverManager INSTANCE;
-    private static WebDriver driver;
+    private WebDriver driver;
 
     private DriverManager() {
     }
@@ -27,11 +27,12 @@ public class DriverManager {
         if (driver == null) {
             if (OS.isFamilyWindows()) {
                 driver = getBrowserDriver("Windows");
-            } else if (OS.isFamilyMac()) {
-                driver = getBrowserDriver("Mac");
             } else if (OS.isFamilyUnix()) {
                 driver = getBrowserDriver("Linux");
+            } else if (OS.isFamilyMac()) {
+                driver = getBrowserDriver("Mac");
             }
+
             driver.manage().window().maximize();
         }
         return driver;
@@ -56,13 +57,13 @@ public class DriverManager {
 
         switch (browser) {
             case "opera":
-                System.setProperty("webdriver.opera.driver", "src/test/resources/operadriver" + extension);
+                System.setProperty("webdriver.opera.driver", "src/main/resources/operadriver" + extension);
                 return new OperaDriver();
             case "firefox":
-                System.setProperty("webdriver.firefox.driver", "src/test/resources/firefoxdriver" + extension);
+                System.setProperty("webdriver.firefox.driver", "src/main/resources/firefoxdriver" + extension);
                 return new FirefoxDriver();
             default:
-                System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver" + extension);
+                System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver" + extension);
                 return new ChromeDriver();
         }
     }

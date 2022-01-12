@@ -3,7 +3,6 @@ package ru.ibs.myframework.pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.List;
@@ -33,56 +32,61 @@ public class DMSPage extends BasePage {
     private List<WebElement> regionList;
 
 
-
-    public DMSPage() {
-        PageFactory.initElements(driver, this);
-    }
-
-    public void clickApplicationButton() {
+    public DMSPage clickApplicationButton() {
         pageUtils.click(applicationButton);
+        return this;
     }
 
-    public void clickFieldViaActions(String placeholder){
+    public DMSPage clickFieldViaActions(String placeholder){
         WebElement el = pageUtils.getElementByAttribute("placeholder", placeholder, inputList);
         pageUtils.clickViaActions(el);
+        return this;
     }
 
-    public void clickSubmitButton() {
+    public DMSPage clickSubmitButton() {
         pageUtils.click(submitButton);
+        return this;
     }
 
-    public void selectCheckbox() {
+    public DMSPage selectCheckbox() {
         pageUtils.clickViaActions(checkbox);
+        return this;
     }
 
-    public void selectRegionItem(String region) {
+    public DMSPage selectRegionItem(String region) {
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//input[@placeholder=\"Введите\"]/../../..//span")));
         pageUtils.clickItemFromList(region, regionList);
+        return this;
     }
 
-    public void fillInputField(String placeholder, String value) {
+    public DMSPage fillInputField(String placeholder, String value) {
 
         if (placeholder.equals("userTel")) {
             pageUtils.fillInputPhone(pageUtils.getElementByAttribute("placeholder", placeholder, inputList), value);
         } else {
             pageUtils.fillInput(pageUtils.getElementByAttribute("placeholder", placeholder, inputList), value);
         }
+        return this;
     }
 
-    public void checkDMSTitle(String contains, String expectedTitle) {
+    public DMSPage checkDMSTitle(String contains, String expectedTitle) {
         pageUtils.assertTitle(contains, expectedTitle);
+        return this;
     }
 
-    public void checkH2Title(String h2Text, String assertMsg) {
+    public DMSPage checkH2Title(String h2Text, String assertMsg) {
         pageUtils.assertElementVisibility(h2, h2Text, assertMsg);
+        return this;
     }
 
-    public void checkError(String errorMsg) {
+    public DMSPage checkError(String errorMsg) {
         pageUtils.assertErrorField(emailError, errorMsg);
+        return this;
     }
 
-    public void scrollToSubmit() {
+    public DMSPage scrollToSubmit() {
         pageUtils.scrollJS(submitButton);
+        return this;
     }
 
 }

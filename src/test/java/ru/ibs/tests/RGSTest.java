@@ -2,6 +2,7 @@ package ru.ibs.tests;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import ru.ibs.myframework.managers.PageManager;
 import ru.ibs.myframework.pages.CompaniesPage;
 import ru.ibs.myframework.pages.DMSPage;
 import ru.ibs.myframework.pages.MainPage;
@@ -9,21 +10,21 @@ import ru.ibs.tests.base.Base;
 
 public class RGSTest extends Base {
 
-    private final MainPage mainPage = new MainPage();
-    private final CompaniesPage companiesPage = new CompaniesPage();
-    private final DMSPage dmsPage = new DMSPage();
+    private final PageManager pageManager = PageManager.getInstance();
 
     @Test
     @DisplayName("RGS insurance query-form test")
     public void test() {
 
-        mainPage.selectNavMenu("Компаниям"); //клик по компаниям
-        companiesPage.checkCompaniesPageTitle("компаний", "Страхование компаний и юридических лиц | Росгосстрах");
-        companiesPage.selectBaseMenuButton("Здоровье");
-        companiesPage.selectHealthMenuButton("Добровольное медицинское страхование");
-        dmsPage.checkDMSTitle("Добровольное", "Добровольное медицинское страхование для компаний и юридических лиц в Росгосстрахе");
-        dmsPage.clickApplicationButton();
-        dmsPage.checkH2Title("Оперативно позвоним", "Отсутствует заголовок формы ввода данных!");
+        pageManager.getMainPage().selectNavMenu("Компаниям"); //клик по компаниям
+
+        pageManager.getCompaniesPage().checkCompaniesPageTitle("компаний", "Страхование компаний и юридических лиц | Росгосстрах")
+                .selectBaseMenuButton("Здоровье")
+                .selectHealthMenuButton("Добровольное медицинское страхование");
+
+        pageManager.getDMSPage().checkDMSTitle("Добровольное", "Добровольное медицинское страхование для компаний и юридических лиц в Росгосстрахе")
+                .clickApplicationButton()
+                .checkH2Title("Оперативно позвоним", "Отсутствует заголовок формы ввода данных!");
 
 
         try {
@@ -32,20 +33,19 @@ public class RGSTest extends Base {
             e.printStackTrace();
         }
 
-        dmsPage.fillInputField("Иванов Иван Иванович", "Иванов Иван Иванович");
-        dmsPage.fillInputField("+7 XXX XXX XX XX", "9764554546");
-        dmsPage.fillInputField("hello@email.com", "qwertyqwerty");
-        dmsPage.fillInputField("Введите", "Омск");
-        dmsPage.selectCheckbox();
+        pageManager.getDMSPage()
+                .fillInputField("Иванов Иван Иванович", "Иванов Иван Иванович")
+                .fillInputField("+7 XXX XXX XX XX", "9764554546")
+                .fillInputField("hello@email.com", "qwertyqwerty")
+                .fillInputField("Введите", "Омск")
+                .selectCheckbox()
 
-        dmsPage.clickFieldViaActions("Введите");
+                .clickFieldViaActions("Введите")
+                .selectRegionItem("г Омск")
 
-        dmsPage.selectRegionItem("г Омск");
-
-
-        dmsPage.scrollToSubmit();
-        dmsPage.clickSubmitButton();
-        dmsPage.checkError("Введите корректный адрес электронной почты");
+                .scrollToSubmit()
+                .clickSubmitButton()
+                .checkError("Введите корректный адрес электронной почты");
 
     }
 

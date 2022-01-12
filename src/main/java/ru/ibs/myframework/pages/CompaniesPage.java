@@ -2,7 +2,6 @@ package ru.ibs.myframework.pages;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 
 import java.util.List;
 
@@ -15,21 +14,18 @@ public class CompaniesPage extends BasePage {
     private List<WebElement> healthMenu;
 
 
-    public CompaniesPage() {
-        PageFactory.initElements(driver, this);
-
-    }
-
-
-    public void selectBaseMenuButton(String btnText) {
+    public CompaniesPage selectBaseMenuButton(String btnText) {
         pageUtils.clickItemFromList(btnText, baseMenu);
+        return this;
     }
 
-    public void selectHealthMenuButton(String btnText) {
+    public CompaniesPage selectHealthMenuButton(String btnText) {
         pageUtils.clickItemFromList(btnText, healthMenu);
+        return this;
     }
 
-    public void checkCompaniesPageTitle(String contains, String expectedTitle) {
+    public CompaniesPage checkCompaniesPageTitle(String contains, String expectedTitle) {
         pageUtils.assertTitle(contains, expectedTitle);
+        return this;
     }
 }
