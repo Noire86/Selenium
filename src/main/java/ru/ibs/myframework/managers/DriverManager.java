@@ -32,10 +32,6 @@ public class DriverManager {
             } else if (OS.isFamilyMac()) {
                 driver = getBrowserDriver("Mac");
             }
-
-            driver.manage().window().maximize();
-
-
             return driver;
 
         }

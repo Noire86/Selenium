@@ -7,6 +7,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import ru.ibs.myframework.managers.DriverManager;
 
 import java.util.List;
 
@@ -16,9 +17,9 @@ public class PageUtils {
     private final WebDriverWait wait;
     private final Actions actions;
 
-    public PageUtils(WebDriver driver, WebDriverWait wait) {
-        this.driver = driver;
-        this.wait = wait;
+    public PageUtils() {
+        this.driver = DriverManager.getInstance().getDriver();
+        this.wait = new WebDriverWait(driver, 20, 2000);
         this.actions = new Actions(driver);
     }
 
