@@ -8,12 +8,7 @@ public class PageManager {
 
     private static PageManager INSTANCE;
 
-    private MainPage mainPage;
-    private CompaniesPage companiesPage;
-    private DMSPage dmsPage;
-
     private PageManager() {
-
     }
 
 
@@ -25,23 +20,14 @@ public class PageManager {
     }
 
     public MainPage getMainPage() {
-        if (mainPage == null) {
-            mainPage = new MainPage();
-        }
-        return mainPage;
+        return new MainPage();
     }
 
     public CompaniesPage getCompaniesPage() {
-        if (companiesPage == null) {
-            companiesPage = new CompaniesPage();
-        }
-        return companiesPage;
+        return new CompaniesPage();
     }
 
     public DMSPage getDMSPage() {
-        if (dmsPage == null) {
-            dmsPage = new DMSPage();
-        }
-        return dmsPage;
+        return new DMSPage();
     }
 }

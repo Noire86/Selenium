@@ -35,8 +35,18 @@ public class DriverManager {
 
             driver.manage().window().maximize();
 
+
+            return driver;
+
         }
         return driver;
+    }
+
+    public void quitDriver(){
+        if (driver != null){
+            driver.quit();
+            driver = null;
+        }
     }
 
 
