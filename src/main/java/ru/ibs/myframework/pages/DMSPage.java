@@ -1,5 +1,6 @@
 package ru.ibs.myframework.pages;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -31,34 +32,34 @@ public class DMSPage extends BasePage {
     @FindBy(xpath = "//input[@placeholder=\"Введите\"]/../../..//span")
     private List<WebElement> regionList;
 
-
+    @Step
     public DMSPage clickApplicationButton() {
         pageUtils.click(applicationButton);
         return pageManager.getDMSPage();
     }
-
+    @Step
     public DMSPage clickFieldViaActions(String placeholder){
         WebElement el = pageUtils.getElementByAttribute("placeholder", placeholder, inputList);
         pageUtils.clickViaActions(el);
         return pageManager.getDMSPage();
     }
-
+    @Step
     public DMSPage clickSubmitButton() {
         pageUtils.click(submitButton);
         return pageManager.getDMSPage();
     }
-
+    @Step
     public DMSPage selectCheckbox() {
         pageUtils.clickViaActions(checkbox);
         return pageManager.getDMSPage();
     }
-
+    @Step
     public DMSPage selectRegionItem(String region) {
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//input[@placeholder=\"Введите\"]/../../..//span")));
         pageUtils.clickItemFromList(region, regionList);
         return pageManager.getDMSPage();
     }
-
+    @Step
     public DMSPage fillInputField(String placeholder, String value) {
 
         if (placeholder.equals("userTel")) {
@@ -68,22 +69,22 @@ public class DMSPage extends BasePage {
         }
         return pageManager.getDMSPage();
     }
-
+    @Step
     public DMSPage checkDMSTitle(String contains, String expectedTitle) {
         pageUtils.assertTitle(contains, expectedTitle);
         return pageManager.getDMSPage();
     }
-
+    @Step
     public DMSPage checkH2Title(String h2Text, String assertMsg) {
         pageUtils.assertElementVisibility(h2, h2Text, assertMsg);
         return pageManager.getDMSPage();
     }
-
+    @Step
     public DMSPage checkError(String errorMsg) {
         pageUtils.assertErrorField(emailError, errorMsg);
         return pageManager.getDMSPage();
     }
-
+    @Step
     public DMSPage scrollToSubmit() {
         pageUtils.scrollJS(submitButton);
         return pageManager.getDMSPage();

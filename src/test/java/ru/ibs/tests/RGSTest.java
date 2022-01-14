@@ -1,5 +1,6 @@
 package ru.ibs.tests;
 
+import io.qameta.allure.Description;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import ru.ibs.myframework.managers.PageManager;
@@ -11,7 +12,8 @@ import ru.ibs.tests.base.Base;
 public class RGSTest extends Base {
 
     @Test
-    @DisplayName("RGS insurance query-form test")
+    @Description("RGSTest")
+    @DisplayName("Single test")
     public void test() {
 
         PageManager.getInstance().getMainPage().selectNavMenu("Компаниям")

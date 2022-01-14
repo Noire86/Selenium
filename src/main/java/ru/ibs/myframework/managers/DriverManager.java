@@ -1,6 +1,6 @@
 package ru.ibs.myframework.managers;
 
-import org.apache.commons.exec.OS;
+import org.junit.jupiter.api.condition.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -25,11 +25,11 @@ public class DriverManager {
 
     public WebDriver getDriver() {
         if (driver == null) {
-            if (OS.isFamilyWindows()) {
+            if (OS.WINDOWS.isCurrentOs()) {
                 driver = getBrowserDriver("Windows");
-            } else if (OS.isFamilyUnix()) {
+            } else if (OS.LINUX.isCurrentOs()) {
                 driver = getBrowserDriver("Linux");
-            } else if (OS.isFamilyMac()) {
+            } else if (OS.MAC.isCurrentOs()) {
                 driver = getBrowserDriver("Mac");
             }
             return driver;
