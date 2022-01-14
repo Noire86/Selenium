@@ -1,8 +1,8 @@
 package ru.ibs.myframework.managers;
 
-import ru.ibs.myframework.pages.CompaniesPage;
-import ru.ibs.myframework.pages.DMSPage;
-import ru.ibs.myframework.pages.MainPage;
+import ru.ibs.myframework.pages.RGS.CompaniesPage;
+import ru.ibs.myframework.pages.RGS.DMSPage;
+import ru.ibs.myframework.pages.RGS.MainPage;
 
 public class PageManager {
 

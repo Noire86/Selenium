@@ -1,24 +1,18 @@
-package ru.ibs.tests;
+package ru.ibs.tests.rgs.base;
 
 import io.qameta.allure.Description;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvFileSource;
+import org.junit.jupiter.api.Test;
 import ru.ibs.myframework.managers.PageManager;
-import ru.ibs.tests.base.Base;
 
+public class RGSTest extends Base {
 
-public class RGSParamTest extends Base {
+    @Test
+    @Description("RGSTest")
+    @DisplayName("Single test")
+    public void test() {
 
-    @ParameterizedTest
-    @CsvFileSource(resources = "fields.csv")
-    @Description("RGSTest Params")
-    @DisplayName("Parametrized RGS test")
-    public void test(String name, String phone, String email, String region) { //укажем какие параметры мы должны передавать при каждой итерации
-
-
-        PageManager.getInstance().getMainPage()
-                .selectNavMenu("Компаниям")
+        PageManager.getInstance().getMainPage().selectNavMenu("Компаниям")
                 .checkCompaniesPageTitle("компаний", "Страхование компаний и юридических лиц | Росгосстрах")
                 .selectBaseMenuButton("Здоровье")
                 .selectHealthMenuButton("Добровольное медицинское страхование")
@@ -34,14 +28,14 @@ public class RGSParamTest extends Base {
         }
 
         PageManager.getInstance().getDMSPage()
-                .fillInputField("Иванов Иван Иванович", name)
-                .fillInputField("+7 XXX XXX XX XX", phone)
-                .fillInputField("hello@email.com", email)
-                .fillInputField("Введите", region)
+                .fillInputField("Иванов Иван Иванович", "Иванов Иван Иванович")
+                .fillInputField("+7 XXX XXX XX XX", "9764554546")
+                .fillInputField("hello@email.com", "qwertyqwerty")
+                .fillInputField("Введите", "Омск")
                 .selectCheckbox()
 
                 .clickFieldViaActions("Введите")
-                .selectRegionItem(region)
+                .selectRegionItem("г Омск")
 
                 .scrollToSubmit()
                 .clickSubmitButton()

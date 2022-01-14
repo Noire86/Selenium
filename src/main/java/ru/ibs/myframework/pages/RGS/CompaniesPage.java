@@ -1,8 +1,9 @@
-package ru.ibs.myframework.pages;
+package ru.ibs.myframework.pages.RGS;
 
 import io.qameta.allure.Step;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import ru.ibs.myframework.pages.BasePage;
 
 import java.util.List;
 

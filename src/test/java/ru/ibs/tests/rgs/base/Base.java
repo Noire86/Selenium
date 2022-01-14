@@ -1,4 +1,4 @@
-package ru.ibs.tests.base;
+package ru.ibs.tests.rgs.base;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;

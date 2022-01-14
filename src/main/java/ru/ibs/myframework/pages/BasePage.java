@@ -4,7 +4,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import ru.ibs.myframework.managers.DriverManager;
 import ru.ibs.myframework.managers.PageManager;
-import ru.ibs.myframework.managers.util.PageUtils;
+import ru.ibs.myframework.util.PageUtils;
 
 public class BasePage {
     protected PageManager pageManager = PageManager.getInstance();

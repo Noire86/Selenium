@@ -1,4 +1,4 @@
-package ru.ibs.myframework.managers.util;
+package ru.ibs.myframework.util;
 
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.JavascriptExecutor;
