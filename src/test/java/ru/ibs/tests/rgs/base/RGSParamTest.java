@@ -23,21 +23,14 @@ public class RGSParamTest extends Base {
                 .selectHealthMenuButton("Добровольное медицинское страхование")
                 .checkDMSTitle("Добровольное", "Добровольное медицинское страхование для компаний и юридических лиц в Росгосстрахе")
                 .clickApplicationButton()
-                .checkH2Title("Оперативно позвоним", "Отсутствует заголовок формы ввода данных!");
-
-
-
-
-        PageManager.getInstance().getDMSPage()
+                .checkH2Title("Оперативно позвоним", "Отсутствует заголовок формы ввода данных!")
                 .fillInputField("Иванов Иван Иванович", name)
                 .fillInputField("+7 XXX XXX XX XX", phone)
                 .fillInputField("hello@email.com", email)
                 .fillInputField("Введите", region)
                 .selectCheckbox()
-
                 .clickFieldViaActions("Введите")
                 .selectRegionItem(region)
-
                 .scrollToSubmit()
                 .clickSubmitButton()
                 .checkError("Введите корректный адрес электронной почты");

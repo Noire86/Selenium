@@ -36,6 +36,12 @@ public class DMSPage extends BasePage {
     @Step
     public DMSPage clickApplicationButton() {
         pageUtils.click(applicationButton);
+
+        try {
+            Thread.sleep(1600);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         return pageManager.getDMSPage();
     }
     @Step
