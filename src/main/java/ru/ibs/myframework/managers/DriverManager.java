@@ -7,19 +7,19 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.opera.OperaDriver;
 
 
-public class DriverManager {
+public final class DriverManager {
 
-    private static DriverManager INSTANCE;
     private WebDriver driver;
 
     private DriverManager() {
     }
 
+    private static class Holder {
+        public static final DriverManager INSTANCE = new DriverManager();
+    }
+
     public static DriverManager getInstance() {
-        if (INSTANCE == null) {
-            INSTANCE = new DriverManager();
-        }
-        return INSTANCE;
+        return Holder.INSTANCE;
     }
 
 
@@ -38,8 +38,8 @@ public class DriverManager {
         return driver;
     }
 
-    public void quitDriver(){
-        if (driver != null){
+    public void quitDriver() {
+        if (driver != null) {
             driver.quit();
             driver = null;
         }

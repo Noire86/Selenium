@@ -1,0 +1,4 @@
+- Доделать PageManager
+- Написать Properties
+- Домашка по Allure
+- Домашка по Огурцу

@@ -4,19 +4,18 @@ import ru.ibs.myframework.pages.RGS.CompaniesPage;
 import ru.ibs.myframework.pages.RGS.DMSPage;
 import ru.ibs.myframework.pages.RGS.MainPage;
 
-public class PageManager {
-
-    private static PageManager INSTANCE;
+public final class PageManager {
 
     private PageManager() {
     }
 
+    private static class Holder{
+        public static final PageManager INSTANCE = new PageManager();
+    }
+
 
     public static PageManager getInstance() {
-        if (INSTANCE == null) {
-            INSTANCE = new PageManager();
-        }
-        return INSTANCE;
+        return Holder.INSTANCE;
     }
 
     public MainPage getMainPage() {
