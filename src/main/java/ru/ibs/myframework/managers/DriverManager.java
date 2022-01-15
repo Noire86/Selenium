@@ -36,9 +36,11 @@ public final class DriverManager {
                 driver = getBrowserDriver("Mac");
             }
 
+
             if (propertiesManager.getProperty(PropertyKey.MAXIMIZED).equals("true")) {
                 driver.manage().window().maximize();
             }
+
 
             return driver;
 
@@ -48,6 +50,7 @@ public final class DriverManager {
 
     public void quitDriver() {
         if (driver != null) {
+            driver.manage().deleteAllCookies();
             driver.quit();
             pageManager.clearPages();
             driver = null;
