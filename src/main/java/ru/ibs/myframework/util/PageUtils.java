@@ -23,6 +23,11 @@ public class PageUtils {
         this.actions = new Actions(driver);
     }
 
+    public void hover(WebElement element) {
+        wait.until(ExpectedConditions.visibilityOf(element));
+        actions.moveToElement(element);
+    }
+
     public void click(WebElement webElement) {
         wait.until(ExpectedConditions.elementToBeClickable(webElement));
         webElement.click();
@@ -38,13 +43,12 @@ public class PageUtils {
     public WebElement clickItemFromList(String value, List<WebElement> list) {
         for (WebElement item : list) {
             if (item.getText().contains(value)) {
-                wait.until(ExpectedConditions.visibilityOf(item));
                 wait.until(ExpectedConditions.elementToBeClickable(item));
                 item.click();
                 return item;
             }
         }
-       Assertions.fail("No button with name " + value + " were found ");
+        Assertions.fail("No button with name " + value + " were found ");
         return null;
     }
 
@@ -81,7 +85,7 @@ public class PageUtils {
         Assertions.assertEquals(expectedTitle, driver.getTitle()); //Проверка на корректность заголовка страницы
     }
 
-    public void assertErrorField(WebElement errorField, String errorMsg){
+    public void assertErrorField(WebElement errorField, String errorMsg) {
         wait.until(ExpectedConditions.visibilityOf(errorField));
         Assertions.assertEquals(errorMsg, errorField.getText());
     }
@@ -99,9 +103,23 @@ public class PageUtils {
         }
     }
 
-    public WebElement getElementByAttribute(String attribute, String value, List<WebElement> list) {
+    public WebElement getElementByAttributeEquals(String attribute, String value, List<WebElement> list) {
+        wait.until(ExpectedConditions.visibilityOfAllElements(list));
+
         for (WebElement el : list) {
-            if (el.getAttribute(attribute).equals(value)) {
+            if (el.getAttribute(attribute).equalsIgnoreCase(value)) {
+                return el;
+            }
+        }
+        return null;
+    }
+
+
+    public WebElement getElementByAttributeContains(String attribute, String value, List<WebElement> list) {
+        wait.until(ExpectedConditions.visibilityOfAllElements(list));
+
+        for (WebElement el : list) {
+            if (el.getAttribute(attribute).toLowerCase().contains(value.toLowerCase())) {
                 return el;
             }
         }
