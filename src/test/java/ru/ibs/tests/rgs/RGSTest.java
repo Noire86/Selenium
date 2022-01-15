@@ -1,9 +1,11 @@
-package ru.ibs.tests.rgs.base;
+package ru.ibs.tests.rgs;
 
 import io.qameta.allure.Description;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import ru.ibs.myframework.managers.PageManager;
+import ru.ibs.myframework.pageobjects.rgs.MainPage;
+import ru.ibs.tests.rgs.base.Base;
 
 public class RGSTest extends Base {
 
@@ -12,7 +14,8 @@ public class RGSTest extends Base {
     @DisplayName("Single test")
     public void test() {
 
-        PageManager.getInstance().getMainPage().selectNavMenu("Компаниям")
+        PageManager.getInstance().getPage(MainPage.class)
+                .selectNavMenu("Компаниям")
                 .checkCompaniesPageTitle("компаний", "Страхование компаний и юридических лиц | Росгосстрах")
                 .selectBaseMenuButton("Здоровье")
                 .selectHealthMenuButton("Добровольное медицинское страхование")

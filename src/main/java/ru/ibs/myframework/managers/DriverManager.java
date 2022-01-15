@@ -12,6 +12,7 @@ public final class DriverManager {
 
     private WebDriver driver;
     private final PropertiesManager propertiesManager = PropertiesManager.getInstance();
+    private final PageManager pageManager = PageManager.getInstance();
 
     private DriverManager() {
     }
@@ -48,6 +49,7 @@ public final class DriverManager {
     public void quitDriver() {
         if (driver != null) {
             driver.quit();
+            pageManager.clearPages();
             driver = null;
         }
     }
@@ -69,14 +71,14 @@ public final class DriverManager {
 
         switch (browser) {
             case "opera":
-                System.setProperty("webdriver.opera.driver", driverPath + extension);
+                System.setProperty("webdriver.opera.driver", driverPath + browser + "driver" + extension);
                 return new OperaDriver();
             case "firefox":
-                System.setProperty("webdriver.firefox.driver", driverPath + extension);
+                System.setProperty("webdriver.firefox.driver", driverPath + browser + "driver" + extension);
                 return new FirefoxDriver();
             case "chrome":
             default:
-                System.setProperty("webdriver.chrome.driver", driverPath + extension);
+                System.setProperty("webdriver.chrome.driver", driverPath + browser + "driver" + extension);
                 return new ChromeDriver();
         }
     }

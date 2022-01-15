@@ -1,4 +1,4 @@
-- Доделать PageManager
-- Написать Properties
+- Доделать PageManager -
+- Написать Properties - done
 - Домашка по Allure
 - Домашка по Огурцу
