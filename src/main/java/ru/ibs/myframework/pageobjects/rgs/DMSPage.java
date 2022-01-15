@@ -46,7 +46,7 @@ public class DMSPage extends BasePage {
     }
     @Step
     public DMSPage clickFieldViaActions(String placeholder){
-        WebElement el = pageUtils.getElementByAttribute("placeholder", placeholder, inputList);
+        WebElement el = pageUtils.getElementByAttributeEquals("placeholder", placeholder, inputList);
         pageUtils.clickViaActions(el);
         return pageManager.getPage(DMSPage.class);
     }
@@ -70,9 +70,9 @@ public class DMSPage extends BasePage {
     public DMSPage fillInputField(String placeholder, String value) {
 
         if (placeholder.equals("userTel")) {
-            pageUtils.fillInputPhone(pageUtils.getElementByAttribute("placeholder", placeholder, inputList), value);
+            pageUtils.fillInputPhone(pageUtils.getElementByAttributeEquals("placeholder", placeholder, inputList), value);
         } else {
-            pageUtils.fillInput(pageUtils.getElementByAttribute("placeholder", placeholder, inputList), value);
+            pageUtils.fillInput(pageUtils.getElementByAttributeEquals("placeholder", placeholder, inputList), value);
         }
         return pageManager.getPage(DMSPage.class);
     }

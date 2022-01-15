@@ -6,7 +6,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 import ru.ibs.myframework.managers.PageManager;
 import ru.ibs.myframework.pageobjects.rgs.MainPage;
-import ru.ibs.tests.rgs.base.Base;
+import ru.ibs.tests.Base;
 
 
 public class RGSParamTest extends Base {

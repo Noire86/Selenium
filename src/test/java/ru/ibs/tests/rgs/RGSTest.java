@@ -5,7 +5,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import ru.ibs.myframework.managers.PageManager;
 import ru.ibs.myframework.pageobjects.rgs.MainPage;
-import ru.ibs.tests.rgs.base.Base;
+import ru.ibs.tests.Base;
 
 public class RGSTest extends Base {
 
