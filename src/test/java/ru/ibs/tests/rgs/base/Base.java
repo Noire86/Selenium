@@ -7,6 +7,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.WebDriver;
 import ru.ibs.myframework.managers.DriverManager;
 import ru.ibs.myframework.managers.PageManager;
+import ru.ibs.myframework.managers.PropertiesManager;
+import ru.ibs.myframework.util.PropertyKey;
 
 public class Base {
     DriverManager driverManager = DriverManager.getInstance();
@@ -16,8 +18,7 @@ public class Base {
 
     @BeforeEach
     void beforeEach() {
-        driverManager.getDriver().manage().window().maximize(); //потом перенести в .properties
-        driverManager.getDriver().get("https://rgs.ru");
+        driverManager.getDriver().get(PropertiesManager.getInstance().getProperty(PropertyKey.SITE_ADDRESS));
     }
 
     @AfterEach

@@ -23,15 +23,20 @@ public final class PropertiesManager {
         return Holder.INSTANCE;
     }
 
-    public Properties getProperties() {
-        return properties;
+
+    public String getProperty(String key) {
+        return properties.getProperty(key);
+    }
+
+    public String getProperty(String key, String def) {
+        return properties.getProperty(key, def);
     }
 
 
     private void loadProperties() {
         try {
 
-            String path = System.getProperty("propertiesPath", "src/main/resources/");
+            String path = System.getProperty("propertiesPath", "src/main/resources/properties/");
             String fileName = System.getProperty("propertiesFilename", "framework");
 
 
@@ -42,13 +47,10 @@ public final class PropertiesManager {
     }
 
     private void loadCustomProperties() {
-        properties.forEach((fileKey, fileValue) ->
-                System.getProperties().forEach((customKey, customValue) -> {
-                            if (fileKey.toString().equals(customKey.toString()) && !fileValue.toString().equals(customValue.toString())) {
-                                properties.setProperty(fileKey.toString(), customValue.toString());
-                            }
-                        }
-                )
-        );
+        properties.forEach((fileKey, fileValue) -> System.getProperties().forEach((customKey, customValue) -> {
+            if (fileKey.toString().equals(customKey.toString()) && !fileValue.toString().equals(customValue.toString())) {
+                properties.setProperty(fileKey.toString(), customValue.toString());
+            }
+        }));
     }
 }
