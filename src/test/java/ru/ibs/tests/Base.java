@@ -12,13 +12,14 @@ import ru.ibs.myframework.util.PropertyKey;
 
 public class Base {
     DriverManager driverManager = DriverManager.getInstance();
+    PropertiesManager propertiesManager = PropertiesManager.getInstance();
 
     @BeforeAll
     static void beforeAll() {}
 
     @BeforeEach
     void beforeEach() {
-        driverManager.getDriver().get(PropertiesManager.getInstance().getProperty(PropertyKey.SITE_ADDRESS));
+        driverManager.getDriver().get(propertiesManager.getProperty(PropertyKey.SITE_ADDRESS));
     }
 
     @AfterEach

@@ -19,7 +19,7 @@ public class PageUtils {
 
     public PageUtils() {
         this.driver = DriverManager.getInstance().getDriver();
-        this.wait = new WebDriverWait(driver, 20, 2000);
+        this.wait = DriverManager.getInstance().getDriverWait();
         this.actions = new Actions(driver);
     }
 

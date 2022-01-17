@@ -7,9 +7,9 @@ import ru.ibs.myframework.managers.PageManager;
 import ru.ibs.myframework.util.PageUtils;
 
 public class BasePage {
+    protected WebDriverWait wait = DriverManager.getInstance().getDriverWait();
     protected PageManager pageManager = PageManager.getInstance();
     protected PageUtils pageUtils = new PageUtils();
-    protected WebDriverWait wait = new WebDriverWait(DriverManager.getInstance().getDriver(), 20, 5000);
 
     public BasePage() {
         PageFactory.initElements(DriverManager.getInstance().getDriver(), this);

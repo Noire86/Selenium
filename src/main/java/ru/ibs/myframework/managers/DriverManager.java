@@ -5,12 +5,14 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.opera.OperaDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import ru.ibs.myframework.util.PropertyKey;
 
 
 public final class DriverManager {
 
     private WebDriver driver;
+    private WebDriverWait wait;
     private final PropertiesManager propertiesManager = PropertiesManager.getInstance();
     private final PageManager pageManager = PageManager.getInstance();
 
@@ -36,16 +38,21 @@ public final class DriverManager {
                 driver = getBrowserDriver("Mac");
             }
 
-
             if (propertiesManager.getProperty(PropertyKey.MAXIMIZED).equals("true")) {
                 driver.manage().window().maximize();
             }
-
-
             return driver;
-
         }
         return driver;
+    }
+
+
+    public WebDriverWait getDriverWait() {
+        if (wait == null) {
+            wait = new WebDriverWait(getDriver(), Integer.parseInt(propertiesManager.getProperty(PropertyKey.WAIT_TIMEOUT, "20")), Integer.parseInt(propertiesManager.getProperty(PropertyKey.WAIT_SLEEP, "2000")));
+            return wait;
+        }
+        return wait;
     }
 
     public void quitDriver() {
