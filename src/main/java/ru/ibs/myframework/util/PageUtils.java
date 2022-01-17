@@ -91,6 +91,7 @@ public class PageUtils {
     }
 
     public void assertElementVisibility(WebElement element, String assertMsg) {
+        wait.until(ExpectedConditions.visibilityOf(element));
         Assertions.assertTrue(element.isDisplayed(), assertMsg);
     }
 
@@ -104,26 +105,54 @@ public class PageUtils {
     }
 
     public WebElement getElementByAttributeEquals(String attribute, String value, List<WebElement> list) {
-        wait.until(ExpectedConditions.visibilityOfAllElements(list));
-
         for (WebElement el : list) {
-            if (el.getAttribute(attribute).equalsIgnoreCase(value)) {
+            if (el != null && el.getAttribute(attribute).equalsIgnoreCase(value)) {
                 return el;
             }
         }
         return null;
     }
 
+    public WebElement getElementByAttributeEquals(String attribute, String value, List<WebElement> list, boolean needWait) {
+        if (needWait) {
+            wait.until(ExpectedConditions.visibilityOfAllElements(list));
+        }
+        return getElementByAttributeEquals(attribute, value, list);
+    }
+
 
     public WebElement getElementByAttributeContains(String attribute, String value, List<WebElement> list) {
-        wait.until(ExpectedConditions.visibilityOfAllElements(list));
-
         for (WebElement el : list) {
             if (el.getAttribute(attribute).toLowerCase().contains(value.toLowerCase())) {
                 return el;
             }
         }
         return null;
+    }
+
+    public WebElement getElementByAttributeContains(String attribute, String value, List<WebElement> list, boolean needWait) {
+        if (needWait) {
+            wait.until(ExpectedConditions.visibilityOfAllElements(list));
+        }
+        return getElementByAttributeContains(attribute,value,list);
+    }
+
+
+    public WebElement getSelectedElement(List<WebElement> elements) {
+        for(WebElement e : elements) {
+            if(e.isSelected()) {
+                return e;
+            }
+        }
+        return null;
+    }
+
+    public int textAsInt(WebElement element) {
+        return Integer.parseInt(element.getText().replaceAll("\\D+", ""));
+    }
+
+    public int attributeAsInt(WebElement element, String attribute) {
+        return Integer.parseInt(element.getAttribute(attribute).replaceAll("\\D+", ""));
     }
 
 
