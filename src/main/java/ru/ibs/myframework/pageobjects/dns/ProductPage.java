@@ -7,8 +7,8 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import ru.ibs.myframework.pageobjects.BasePage;
 import ru.ibs.myframework.pageobjects.dns.models.Product;
+import ru.ibs.myframework.pageobjects.dns.models.handlers.ProductHandler;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -27,10 +27,16 @@ public class ProductPage extends BasePage {
     private WebElement productBaseSpecs;
 
     @FindBy(xpath = "//div[@class=\"additional-sales-tabs__titles-wrap\"]//div")
-    private List<WebElement> accessoriesList;
+    private List<WebElement> additionalSales;
 
     @FindBy(xpath = "//div[@class=\"product-warranty__items\"]//label")
-    private List<WebElement> warrantyItems;
+    private List<WebElement> warrantyLabels;
+
+    @FindBy(xpath = "//div[@class=\"product-warranty__items\"]//input")
+    private List<WebElement> warrantyInputs;
+
+    @FindBy(xpath = "//div[@class=\"product-warranty__items\"]//span[@class=\"product-warranty__period\"]")
+    private List<WebElement> warrantyPeriods;
 
     @FindBy(xpath = "//div[@class=\"product-card-top__buy\"]//button[contains(@class, \"buy-btn\")]")
     private WebElement buyButton;
@@ -44,16 +50,42 @@ public class ProductPage extends BasePage {
     @FindBy(xpath = "//div[@class=\"product-card-top__buy\"]//button[text()=\"В корзине\"]")
     private WebElement inCartButton;
 
+    private final ProductHandler productHandler = ProductHandler.getInstance();
 
-    private final List<Product> productList = new ArrayList<>();
+
+    private WebElement getWarrantyBox() {
+        WebElement warrantyButton = pageUtils.getElementByAttributeContains("textContent", "Гарантия", additionalSales);
+        wait.until(ExpectedConditions.visibilityOf(warrantyButton));
+        Assertions.assertTrue(warrantyButton.isDisplayed(), "Отсутствует меню выбора доп. гарантии");
+        return warrantyButton;
+    }
 
     public ProductPage clickWarrantyMenu() {
-        pageUtils.click(pageUtils.getElementByAttributeContains("textContent", "Гарантия", accessoriesList));
+        pageUtils.click(getWarrantyBox());
         return pageManager.getPage(ProductPage.class);
     }
 
-    public ProductPage clickWarrantyRadioButton(String attributeValue) {
-        pageUtils.click(pageUtils.getElementByAttributeContains("textContent", attributeValue, warrantyItems));
+    public ProductPage clickWarrantyRadioButton(String period) {
+        WebElement label = pageUtils.getElementByAttributeContains("textContent", period, warrantyPeriods, true).findElement(By.xpath("./../.."));
+        pageUtils.assertElementVisibility(label, "Не обнаружена кнопка выбора гарантии. Ожидалось наличие элемента " + label + ":");
+        pageUtils.click(label);
+
+
+        return pageManager.getPage(ProductPage.class);
+    }
+
+
+    public ProductPage updateProductWarranty(String productName) {
+        Product product = productHandler.getProductByName(productName);
+        Assertions.assertNotEquals("dummy", product.getName(), "Не удалось найти товар, содержащий в наименовании " + productName);
+        WebElement selectedLabel = pageUtils.getSelectedElement(warrantyInputs).findElement(By.xpath("./.."));
+
+        int warrantyPrice = pageUtils.textAsInt(selectedLabel.findElement(By.xpath(".//span[@class=\"product-warranty__price\"]")));
+        int warrantyMonths = pageUtils.textAsInt(selectedLabel.findElement(By.xpath(".//span[@class=\"product-warranty__period\"]")));
+
+        product.setWarrantyPrice(warrantyPrice);
+        product.setWarrantyMonths(warrantyMonths);
+
         return pageManager.getPage(ProductPage.class);
     }
 
@@ -68,14 +100,8 @@ public class ProductPage extends BasePage {
     }
 
     public ProductPage checkSummary() {
-        int productsSummary = 0;
-        for(Product pr : productList) {
-            productsSummary += pr.getPrice();
-        }
-
         wait.until(ExpectedConditions.visibilityOf(inCartButton));
-
-        Assertions.assertEquals(Integer.parseInt(cartLinkPrice.getText().replaceAll("\\D+", "")), productsSummary);
+        Assertions.assertEquals(pageUtils.textAsInt(cartLinkPrice), ProductHandler.getInstance().getSummaryPrice());
         return pageManager.getPage(ProductPage.class);
     }
 
@@ -85,16 +111,16 @@ public class ProductPage extends BasePage {
 
 
     public ProductPage updateProductPrice(String productName) {
-        for (Product pr : productList) {
-            if (pr.getName().toLowerCase().contains(productName)) {
-                pr.setPrice(Integer.parseInt(productPrice.getText().replaceAll("\\D+", "")));
-            }
-        }
+        Product product = productHandler.getProductByName(productName);
+        Assertions.assertNotNull(product, "Не удалось найти товар, содержащий в наименовании " + productName);
+
+        product.setPrice(pageUtils.textAsInt(productPrice));
+
         return pageManager.getPage(ProductPage.class);
     }
 
 
-    public ProductPage createProductModel(boolean hasWarranty) {
+    public ProductPage createProductModel() {
 
         wait.until(ExpectedConditions.visibilityOf(productName));
         String name = productName.getText();
@@ -103,23 +129,13 @@ public class ProductPage extends BasePage {
         String code = productCode.getText().replace("Код товара: ", "");
 
         wait.until(ExpectedConditions.visibilityOf(productPrice));
-        int price = Integer.parseInt(productPrice.getText().trim().replaceAll("\\D+", ""));
+        int price = pageUtils.textAsInt(productPrice);
 
         wait.until(ExpectedConditions.visibilityOfAllElements(productBaseSpecs));
         List<String> basicSpecs = Arrays.asList(productBaseSpecs.getText().split(","));
 
-        int warranty = 0;
-        if (hasWarranty) {
-            wait.until(ExpectedConditions.visibilityOfAllElements(accessoriesList));
-            warranty = Integer.parseInt(pageUtils.getElementByAttributeContains("textContent", "Гарантия", accessoriesList)
-                    .getText()
-                    .trim()
-                    .replaceAll("\\D+", ""));
-        }
-
-        productList.add(new Product(name, code, price, warranty, basicSpecs));
+        productHandler.put(new Product(name, code, price, 0, 0, basicSpecs));
 
         return pageManager.getPage(ProductPage.class);
-
     }
 }
