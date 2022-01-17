@@ -15,9 +15,10 @@ public class DNSTest extends Base {
                 .selectSuggestion("nintendo switch")
                 .checkSearchPageH1()
                 .clickProduct("nintendo switch")
-                .createProductModel(true)
+                .createProductModel()
                 .clickWarrantyMenu()
-                .clickWarrantyRadioButton("24 мес.")
+                .clickWarrantyRadioButton("24")
+                .updateProductWarranty("nintendo switch")
                 .updateProductPrice("nintendo switch")
                 .clickBuy()
                 .goToSearchField()
@@ -25,19 +26,24 @@ public class DNSTest extends Base {
                 .selectSuggestion("detroit")
                 .checkSearchPageH1()
                 .clickProduct("detroit")
-                .createProductModel(false)
+                .createProductModel()
                 .clickBuy()
                 .checkSummary()
-                .clickCart();
-
-
-
+                .clickCart()
+                .checkWarranty("nintendo switch",24)
+                .checkPrice("nintendo switch")
+                .checkPrice("detroit")
+                .checkSummary()
+                .deletePosition("detroit")
+                .addItem("nintendo switch", 4)
+                .checkSummary();
 
 
         try {
-            Thread.sleep(1200);
+            Thread.sleep(15000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
     }
 }
