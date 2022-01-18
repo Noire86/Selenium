@@ -50,6 +50,9 @@ public class ProductPage extends BasePage {
     @FindBy(xpath = "//div[@class=\"product-card-top__buy\"]//button[text()=\"В корзине\"]")
     private WebElement inCartButton;
 
+    @FindBy(xpath = "//span[@class=\"cart-link__badge\"]")
+    private WebElement cartCounter;
+
     private final ProductHandler productHandler = ProductHandler.getInstance();
 
 
@@ -100,7 +103,11 @@ public class ProductPage extends BasePage {
     }
 
     public ProductPage checkSummary() {
-        wait.until(ExpectedConditions.visibilityOf(inCartButton));
+        int cartAmount = Integer.parseInt(cartCounter.getAttribute("textContent")) + 1;
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//span[@class=\"cart-link__badge\"]")));
+        wait.until(ExpectedConditions.attributeToBe(By.xpath("//span[@class=\"cart-link__badge\"]"), "textContent", String.valueOf(cartAmount)));
+
+
         Assertions.assertEquals(pageUtils.textAsInt(cartLinkPrice), ProductHandler.getInstance().getSummaryPrice());
         return pageManager.getPage(ProductPage.class);
     }
