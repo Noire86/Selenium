@@ -26,6 +26,9 @@ public class CartPage extends BasePage {
     @FindBy(xpath = "//span[contains(@class, \"radio-button__icon_checked\")]")
     private WebElement checkedRadio;
 
+    @FindBy (xpath = "//div[@class=\"cart-tab\"]//span[@class=\"restore-last-removed\"]")
+    private WebElement restoreRemovedItem;
+
     private final ProductHandler productHandler = ProductHandler.getInstance();
 
     public CartPage checkWarranty(String productName, int warrantyValue) {
@@ -129,6 +132,14 @@ public class CartPage extends BasePage {
             pageUtils.click(plus);
             wait.until(ExpectedConditions.attributeContains(totalAmount, "textContent", String.valueOf(newAmount)));
         }
+        return pageManager.getPage(CartPage.class);
+    }
+
+    public CartPage restoreRemovedItem() {
+        int preSize = cartItems.size();
+        pageUtils.click(restoreRemovedItem);
+
+        Assertions.assertNotEquals(preSize, cartItems.size(), "Не возвращен удаленный товар");
         return pageManager.getPage(CartPage.class);
     }
 }

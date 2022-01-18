@@ -36,14 +36,14 @@ public class DNSTest extends Base {
                 .checkSummary()
                 .deletePosition("detroit")
                 .addItem("nintendo switch", 4)
-                .checkSummary();
+                .checkSummary()
+                .restoreRemovedItem();
 
 
         try {
-            Thread.sleep(15000);
+            Thread.sleep(4000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
     }
 }
