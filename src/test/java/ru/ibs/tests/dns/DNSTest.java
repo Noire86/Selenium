@@ -37,13 +37,8 @@ public class DNSTest extends Base {
                 .deletePosition("detroit")
                 .addItem("nintendo switch", 4)
                 .checkSummary()
-                .restoreRemovedItem();
-
-
-        try {
-            Thread.sleep(4000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+                .restoreRemovedItem()
+                .checkRestoredItem("detroit")
+                .checkSummary();
     }
 }
