@@ -54,6 +54,9 @@ public class ProductPage extends BasePage {
     @FindBy(xpath = "//span[@class=\"cart-link__badge\"]")
     private WebElement cartCounter;
 
+    @FindBy(className = "order-avail-wrap")
+    private WebElement unavailable;
+
     private final ProductHandler productHandler = ProductHandler.getInstance();
 
 
@@ -70,7 +73,7 @@ public class ProductPage extends BasePage {
     }
     @Step("Выбор параметра гарантии с параметром {period}")
     public ProductPage clickWarrantyRadioButton(String period) {
-        WebElement label = pageUtils.getElementByAttributeContains("textContent", period, warrantyPeriods, true).findElement(By.xpath("./../.."));
+        WebElement label = pageUtils.getElementByAttributeContains("textContent", "+ " + period + " мес.", warrantyPeriods, true).findElement(By.xpath("./../.."));
         pageUtils.assertElementVisibility(label, "Не обнаружена кнопка выбора гарантии. Ожидалось наличие элемента " + label + ":");
         pageUtils.click(label);
 
@@ -94,6 +97,12 @@ public class ProductPage extends BasePage {
     }
     @Step("Клик по кнопке Купить")
     public ProductPage clickBuy() {
+
+
+        if(unavailable.getAttribute("textContent").contains("Товара нет в наличии")) {
+            Assertions.fail("Товара нет в наличии");
+        }
+
         pageUtils.click(buyButton);
         return pageManager.getPage(ProductPage.class);
     }
