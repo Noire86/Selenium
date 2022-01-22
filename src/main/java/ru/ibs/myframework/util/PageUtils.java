@@ -2,6 +2,7 @@ package ru.ibs.myframework.util;
 
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -110,7 +111,7 @@ public class PageUtils {
                 return el;
             }
         }
-        return null;
+        throw new NoSuchElementException("Не найден элемент соответствующий точному параметру атрибута " + attribute);
     }
 
     public WebElement getElementByAttributeEquals(String attribute, String value, List<WebElement> list, boolean needWait) {
@@ -127,7 +128,7 @@ public class PageUtils {
                 return el;
             }
         }
-        return null;
+        throw new NoSuchElementException("Не найден элемент соответствующий приблизительному параметру атрибута " + attribute);
     }
 
     public WebElement getElementByAttributeContains(String attribute, String value, List<WebElement> list, boolean needWait) {
@@ -144,7 +145,7 @@ public class PageUtils {
                 return e;
             }
         }
-        return null;
+        throw new NoSuchElementException("Не найден элемент с состоянием Selected");
     }
 
     public int textAsInt(WebElement element) {
