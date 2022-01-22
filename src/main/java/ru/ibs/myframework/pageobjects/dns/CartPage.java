@@ -1,9 +1,7 @@
 package ru.ibs.myframework.pageobjects.dns;
 
 import org.junit.jupiter.api.Assertions;
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import ru.ibs.myframework.pageobjects.BasePage;
@@ -26,7 +24,7 @@ public class CartPage extends BasePage {
     @FindBy(xpath = "//span[contains(@class, \"radio-button__icon_checked\")]")
     private WebElement checkedRadio;
 
-    @FindBy (xpath = "//div[@class=\"cart-tab\"]//span[@class=\"restore-last-removed\"]")
+    @FindBy(xpath = "//div[@class=\"cart-tab\"]//span[@class=\"restore-last-removed\"]")
     private WebElement restoreRemovedItem;
 
     private final ProductHandler productHandler = ProductHandler.getInstance();
@@ -49,8 +47,10 @@ public class CartPage extends BasePage {
     public CartPage checkPrice(String productName) {
         WebElement el = pageUtils.getElementByAttributeContains("textContent", productName, cartItems);
         Product pr = productHandler.getProductByName(productName);
+
         int cartItemPrice = pageUtils.textAsInt(el.findElement(By.xpath(".//span[@class=\"price__current\"]")));
         int localItemPrice = (pr.getPrice() - pr.getWarrantyPrice());
+
         Assertions.assertEquals(cartItemPrice, localItemPrice, "Расхождение цены в корзине и ProductHandler.productList");
         return pageManager.getPage(CartPage.class);
     }
@@ -62,6 +62,8 @@ public class CartPage extends BasePage {
         int currentItemWarranty = 0;
         int total = pageUtils.textAsInt(totalPrice);
 
+        wait.until(ExpectedConditions.visibilityOfAllElements(cartItems));
+
         for (WebElement el : cartItems) {
             currentItemAmount = pageUtils.attributeAsInt(el.findElement(By.xpath(".//input[@class=\"count-buttons__input\"]")), "value");
             currentItemPrice += pageUtils.textAsInt(el.findElement(By.xpath(".//span[@class=\"price__current\"]")));
@@ -70,7 +72,6 @@ public class CartPage extends BasePage {
                 currentItemWarranty += pageUtils.textAsInt(el.findElement(By.xpath(".//span[contains(@class, \"radio-button__icon_checked\")]/../..//span[@class=\"additional-warranties-row__price\"]")));
                 currentItemWarranty *= currentItemAmount;
             } catch (NoSuchElementException ignored) {
-                System.out.println("BAAAAAAAAAAAAAAAAAAAANG");
             }
 
         }
@@ -136,10 +137,27 @@ public class CartPage extends BasePage {
     }
 
     public CartPage restoreRemovedItem() {
-        int preSize = cartItems.size();
-        pageUtils.click(restoreRemovedItem);
 
-        Assertions.assertNotEquals(preSize, cartItems.size(), "Не возвращен удаленный товар");
+        try {
+            pageUtils.click(restoreRemovedItem);
+        } catch (UnhandledAlertException e) {
+            Assertions.fail("Появился alert: Не удалось вернуть удаленный товар");
+        }
+        return pageManager.getPage(CartPage.class);
+    }
+
+    public CartPage checkRestoredItem(String productName) {
+
+        try {
+            wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.className("cart-items__product"), cartItems.size()));
+
+            WebElement el = pageUtils.getElementByAttributeContains("textContent", productName, cartItems, true);
+            WebElement checkbox = el.findElement(By.className("base-ui-checkbox"));
+            pageUtils.clickViaActions(checkbox);
+
+        } catch (NoSuchElementException | TimeoutException e) {
+            Assertions.fail("Не найден восстановленный элемент");
+        }
         return pageManager.getPage(CartPage.class);
     }
 }
