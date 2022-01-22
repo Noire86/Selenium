@@ -21,20 +21,20 @@ public class SearchFieldPage extends BasePage {
     @FindBy(xpath = "//h1[@class=\"title\"]")
     private WebElement h1;
 
-    @Step
+    @Step("Заполнение поля поиска значением {request}")
     public SearchFieldPage fillSearch(String request) {
         pageUtils.hover(searchField);
         pageUtils.fillInput(searchField, request);
         return pageManager.getPage(SearchFieldPage.class);
     }
-    @Step
+    @Step("Выбор предлагаемого товара {value}")
     public SearchFieldPage selectSuggestion(String value) {
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//div[@class=\"presearch__suggests\"]//a[not (contains(@class, \"history\"))]")));
         pageUtils.click(pageUtils.getElementByAttributeEquals("text", value, suggestions));
         return pageManager.getPage(SearchFieldPage.class);
     }
 
-    @Step
+    @Step("Проверка заголовка страницы поиска товаров")
     public SearchListPage checkSearchPageH1() {
         wait.until(ExpectedConditions.visibilityOf(h1));
         pageUtils.assertElementVisibility(h1, "Не обнаружен заголовок страницы поиска товара");

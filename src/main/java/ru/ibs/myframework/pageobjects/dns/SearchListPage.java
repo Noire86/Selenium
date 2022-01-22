@@ -16,7 +16,7 @@ public class SearchListPage extends BasePage {
     private List<WebElement> productLinks;
 
 
-    @Step
+    @Step("Страница результатов поиска: Клик по товару {titleContains}")
     public ProductPage clickProduct(String titleContains) {
         pageUtils.click(pageUtils.getElementByAttributeContains("text", titleContains, productLinks));
         return pageManager.getPage(ProductPage.class);

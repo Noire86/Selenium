@@ -1,5 +1,6 @@
 package ru.ibs.myframework.pageobjects.dns;
 
+import io.qameta.allure.Step;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
@@ -29,6 +30,7 @@ public class CartPage extends BasePage {
 
     private final ProductHandler productHandler = ProductHandler.getInstance();
 
+    @Step("Проверка наличия гарантии и ее параметров у товара {productName}")
     public CartPage checkWarranty(String productName, int warrantyValue) {
 
         WebElement cartItem = pageUtils.getElementByAttributeContains("textContent", productName, cartItems);
@@ -43,7 +45,7 @@ public class CartPage extends BasePage {
 
         return pageManager.getPage(CartPage.class);
     }
-
+    @Step("Проверка цены товара {productName}")
     public CartPage checkPrice(String productName) {
         WebElement el = pageUtils.getElementByAttributeContains("textContent", productName, cartItems);
         Product pr = productHandler.getProductByName(productName);
@@ -54,7 +56,7 @@ public class CartPage extends BasePage {
         Assertions.assertEquals(cartItemPrice, localItemPrice, "Расхождение цены в корзине и ProductHandler.productList");
         return pageManager.getPage(CartPage.class);
     }
-
+    @Step("Сопоставление общей стоимости товаров и корзины")
     public CartPage checkSummary() {
         int result = 0;
         int currentItemPrice = 0;
@@ -81,6 +83,7 @@ public class CartPage extends BasePage {
         return pageManager.getPage(CartPage.class);
     }
 
+    @Step("Удаление товара {productName} из корзины")
     public CartPage deletePosition(String productName) {
         boolean success = false;
         int cartCost = pageUtils.textAsInt(totalPrice);
@@ -108,7 +111,7 @@ public class CartPage extends BasePage {
         Assertions.assertTrue(success, "Товар " + productName + " не удалился из корзины!");
         return pageManager.getPage(CartPage.class);
     }
-
+    @Step("Увеличение позиции товара {productName} на {times} единиц")
     public CartPage addItem(String productName, int times) {
         int newAmount = pageUtils.textAsInt(totalAmount);
         WebElement plus = null;
@@ -128,14 +131,13 @@ public class CartPage extends BasePage {
         Assertions.assertNotNull(plus);
 
         for (int i = 0; i < times; i++) {
-            System.out.println("CLICKED");
             newAmount++;
             pageUtils.click(plus);
             wait.until(ExpectedConditions.attributeContains(totalAmount, "textContent", String.valueOf(newAmount)));
         }
         return pageManager.getPage(CartPage.class);
     }
-
+    @Step("Возврат удаленного ранее товара")
     public CartPage restoreRemovedItem() {
 
         try {
@@ -145,7 +147,7 @@ public class CartPage extends BasePage {
         }
         return pageManager.getPage(CartPage.class);
     }
-
+    @Step("Проверка восстановленного товара {productName}")
     public CartPage checkRestoredItem(String productName) {
 
         try {
