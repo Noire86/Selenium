@@ -1,6 +1,10 @@
 package ru.ibs.tests.dns;
 
+import io.qameta.allure.Description;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
 import ru.ibs.myframework.managers.PageManager;
 import ru.ibs.myframework.pageobjects.dns.SearchFieldPage;
 import ru.ibs.tests.Base;
@@ -8,37 +12,40 @@ import ru.ibs.tests.Base;
 public class DNSTest extends Base {
 
 
-    @Test
-    public void test(){
+    @ParameterizedTest
+    @CsvFileSource(resources = "fields.csv")
+    @DisplayName("DNS Site test")
+    @Description("DNS Site goods test and validation")
+    public void DNS(String item1, String item2, int warranty, int times){
         PageManager.getInstance().getPage(SearchFieldPage.class)
-                .fillSearch("nintendo switch")
-                .selectSuggestion("nintendo switch")
+                .fillSearch(item1)
+                .selectSuggestion(item1)
                 .checkSearchPageH1()
-                .clickProduct("nintendo switch")
+                .clickProduct(item1)
                 .createProductModel()
                 .clickWarrantyMenu()
-                .clickWarrantyRadioButton("24")
-                .updateProductWarranty("nintendo switch")
-                .updateProductPrice("nintendo switch")
+                .clickWarrantyRadioButton(String.valueOf(warranty))
+                .updateProductWarranty(item1)
+                .updateProductPrice(item1)
                 .clickBuy()
                 .goToSearchField()
-                .fillSearch("detroit")
-                .selectSuggestion("detroit")
+                .fillSearch(item2)
+                .selectSuggestion(item2)
                 .checkSearchPageH1()
-                .clickProduct("detroit")
+                .clickProduct(item2)
                 .createProductModel()
                 .clickBuy()
                 .checkSummary()
                 .clickCart()
-                .checkWarranty("nintendo switch",24)
-                .checkPrice("nintendo switch")
-                .checkPrice("detroit")
+                .checkWarranty(item1,warranty)
+                .checkPrice(item1)
+                .checkPrice(item2)
                 .checkSummary()
-                .deletePosition("detroit")
-                .addItem("nintendo switch", 4)
+                .deletePosition(item2)
+                .addItem(item1, times)
                 .checkSummary()
                 .restoreRemovedItem()
-                .checkRestoredItem("detroit")
+                .checkRestoredItem(item2)
                 .checkSummary();
     }
 }
