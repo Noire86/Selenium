@@ -6,6 +6,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.opera.OperaDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import ru.ibs.myframework.pageobjects.dns.models.handlers.ProductHandler;
 import ru.ibs.myframework.util.PropertyKey;
 
 
@@ -57,9 +58,15 @@ public final class DriverManager {
 
     public void quitDriver() {
         if (driver != null) {
+
             driver.manage().deleteAllCookies();
-            driver.quit();
             pageManager.clearPages();
+            ProductHandler.getInstance().truncateList();
+
+            driver.quit();
+
+
+            wait = null;
             driver = null;
         }
     }
