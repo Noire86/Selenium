@@ -1,6 +1,5 @@
 package ru.ibs.tests.rgs;
 
-import io.qameta.allure.Description;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import ru.ibs.myframework.managers.PageManager;
@@ -10,7 +9,7 @@ import ru.ibs.tests.Base;
 public class RGSTest extends Base {
 
     @Test
-    @Description("RGSTest")
+   // @Description("RGSTest")
     @DisplayName("Single test")
     public void test() {
 

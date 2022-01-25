@@ -50,12 +50,6 @@
             <version>1.8.2</version>
         </dependency>
 
-        <dependency>
-            <groupId>io.qameta.allure</groupId>
-            <artifactId>allure-junit5</artifactId>
-            <version>${allure-junit5.version}</version>
-        </dependency>
-
     </dependencies>
 
 

@@ -12,7 +12,7 @@ import ru.ibs.myframework.managers.PageManager;
 import ru.ibs.myframework.managers.PropertiesManager;
 import ru.ibs.myframework.util.PropertyKey;
 
-@ExtendWith(AllureListener.class)
+//@ExtendWith(AllureListener.class)
 public class Base {
     DriverManager driverManager = DriverManager.getInstance();
     PropertiesManager propertiesManager = PropertiesManager.getInstance();

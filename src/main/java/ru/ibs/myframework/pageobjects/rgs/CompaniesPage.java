@@ -1,6 +1,5 @@
 package ru.ibs.myframework.pageobjects.rgs;
 
-import io.qameta.allure.Step;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import ru.ibs.myframework.pageobjects.BasePage;
@@ -15,17 +14,17 @@ public class CompaniesPage extends BasePage {
     @FindBy(xpath = "//div[@class='header-list-products']//a")
     private List<WebElement> healthMenu;
 
-    @Step
+    //@Step
     public CompaniesPage selectBaseMenuButton(String btnText) {
         pageUtils.clickItemFromList(btnText, baseMenu);
         return pageManager.getPage(CompaniesPage.class);
     }
-    @Step
+    //@Step
     public DMSPage selectHealthMenuButton(String btnText) {
         pageUtils.clickItemFromList(btnText, healthMenu);
         return pageManager.getPage(DMSPage.class);
     }
-    @Step
+    //@Step
     public CompaniesPage checkCompaniesPageTitle(String contains, String expectedTitle) {
         pageUtils.assertTitle(contains, expectedTitle);
         return pageManager.getPage(CompaniesPage.class);

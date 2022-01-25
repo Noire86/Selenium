@@ -1,6 +1,5 @@
 package ru.ibs.myframework.pageobjects.dns;
 
-import io.qameta.allure.Step;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -66,12 +65,12 @@ public class ProductPage extends BasePage {
         Assertions.assertTrue(warrantyButton.isDisplayed(), "Отсутствует меню выбора доп. гарантии");
         return warrantyButton;
     }
-    @Step("Клик по подменю 'Гарантия'")
+  //  @Step("Клик по подменю 'Гарантия'")
     public ProductPage clickWarrantyMenu() {
         pageUtils.click(getWarrantyBox());
         return pageManager.getPage(ProductPage.class);
     }
-    @Step("Выбор параметра гарантии с параметром {period}")
+ //   @Step("Выбор параметра гарантии с параметром {period}")
     public ProductPage clickWarrantyRadioButton(String period) {
         WebElement label = pageUtils.getElementByAttributeContains("textContent", "+ " + period + " мес.", warrantyPeriods, true).findElement(By.xpath("./../.."));
         pageUtils.assertElementVisibility(label, "Не обнаружена кнопка выбора гарантии. Ожидалось наличие элемента " + label + ":");
@@ -81,7 +80,7 @@ public class ProductPage extends BasePage {
         return pageManager.getPage(ProductPage.class);
     }
 
-    @Step("Обновление значений гарантии внутри модели товара {productName}")
+  //  @Step("Обновление значений гарантии внутри модели товара {productName}")
     public ProductPage updateProductWarranty(String productName) {
         Product product = productHandler.getProductByName(productName);
         Assertions.assertNotEquals("dummy", product.getName(), "Не удалось найти товар, содержащий в наименовании " + productName);
@@ -95,7 +94,7 @@ public class ProductPage extends BasePage {
 
         return pageManager.getPage(ProductPage.class);
     }
-    @Step("Клик по кнопке Купить")
+  //  @Step("Клик по кнопке Купить")
     public ProductPage clickBuy() {
 
 
@@ -106,12 +105,12 @@ public class ProductPage extends BasePage {
         pageUtils.click(buyButton);
         return pageManager.getPage(ProductPage.class);
     }
-    @Step("Переход в корзину покупок")
+   // @Step("Переход в корзину покупок")
     public CartPage clickCart() {
         pageUtils.click(cartButton);
         return pageManager.getPage(CartPage.class);
     }
-    @Step("Проверка суммы приобретенного товара")
+ //   @Step("Проверка суммы приобретенного товара")
     public ProductPage checkSummary() {
         int cartAmount = Integer.parseInt(cartCounter.getAttribute("textContent")) + 1;
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//span[@class=\"cart-link__badge\"]")));
@@ -126,7 +125,7 @@ public class ProductPage extends BasePage {
         return pageManager.getPage(SearchFieldPage.class);
     }
 
-    @Step("Обновление цены внутри модели товара {productName}")
+ //   @Step("Обновление цены внутри модели товара {productName}")
     public ProductPage updateProductPrice(String productName) {
         Product product = productHandler.getProductByName(productName);
         Assertions.assertNotNull(product, "Не удалось найти товар, содержащий в наименовании " + productName);
@@ -136,7 +135,7 @@ public class ProductPage extends BasePage {
         return pageManager.getPage(ProductPage.class);
     }
 
-    @Step("Создание модели товара")
+ //   @Step("Создание модели товара")
     public ProductPage createProductModel() {
 
         wait.until(ExpectedConditions.visibilityOf(productName));

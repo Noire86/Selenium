@@ -1,10 +1,7 @@
 package ru.ibs.myframework.util;
 
 import org.junit.jupiter.api.Assertions;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -53,27 +50,26 @@ public class PageUtils {
         return null;
     }
 
-    public void fillInput(WebElement element, String value) {
-        scrollJS(element);
-        wait.until(ExpectedConditions.elementToBeClickable(element));
-        element.click();
-        element.clear();
+    public void fillInputPhone(WebElement element, String value) {
+        clearInput(element);
         element.sendKeys(value);
 
-        //конвертация вводимого номера в масочный формат, т.к атрибут value содержит уже отформатированное значение
         String number = value.replaceFirst("(\\d{3})(\\d{3})(\\d+)", "+7 ($1) $2-$3");
         boolean checkFlag = wait.until(ExpectedConditions.attributeContains(element, "value", number));
         Assertions.assertTrue(checkFlag, "Поле было заполнено некорректно"); //проверка
     }
 
-    public void fillInputPhone(WebElement element, String value) {
-        scrollJS(element);
-        wait.until(ExpectedConditions.elementToBeClickable(element));
-        element.click();
-        element.clear();
+    public void fillInput(WebElement element, String value) {
+        clearInput(element);
         element.sendKeys(value);
+
         boolean checkFlag = wait.until(ExpectedConditions.attributeContains(element, "value", value));
         Assertions.assertTrue(checkFlag, "Поле было заполнено некорректно");
+    }
+
+    public void clearInput(WebElement element) {
+        element.sendKeys(Keys.CONTROL + "a");
+        element.sendKeys(Keys.DELETE);
     }
 
     public void scrollJS(WebElement element) {
@@ -107,6 +103,9 @@ public class PageUtils {
 
     public WebElement getElementByAttributeEquals(String attribute, String value, List<WebElement> list) {
         for (WebElement el : list) {
+
+            String s = el.getAttribute(attribute);
+
             if (el != null && el.getAttribute(attribute).equalsIgnoreCase(value)) {
                 return el;
             }
@@ -154,6 +153,10 @@ public class PageUtils {
 
     public int attributeAsInt(WebElement element, String attribute) {
         return Integer.parseInt(element.getAttribute(attribute).replaceAll("\\D+", ""));
+    }
+
+    public int stringAsInt(String str) {
+        return Integer.parseInt(str.replaceAll("\\D+", ""));
     }
 
 

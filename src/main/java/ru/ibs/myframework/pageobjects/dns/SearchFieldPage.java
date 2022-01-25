@@ -1,6 +1,5 @@
 package ru.ibs.myframework.pageobjects.dns;
 
-import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -21,20 +20,20 @@ public class SearchFieldPage extends BasePage {
     @FindBy(xpath = "//h1[@class=\"title\"]")
     private WebElement h1;
 
-    @Step("Заполнение поля поиска значением {request}")
+  //  @Step("Заполнение поля поиска значением {request}")
     public SearchFieldPage fillSearch(String request) {
         pageUtils.hover(searchField);
         pageUtils.fillInput(searchField, request);
         return pageManager.getPage(SearchFieldPage.class);
     }
-    @Step("Выбор предлагаемого товара {value}")
+  //  @Step("Выбор предлагаемого товара {value}")
     public SearchFieldPage selectSuggestion(String value) {
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//div[@class=\"presearch__suggests\"]//a[not (contains(@class, \"history\"))]")));
         pageUtils.click(pageUtils.getElementByAttributeEquals("text", value, suggestions));
         return pageManager.getPage(SearchFieldPage.class);
     }
 
-    @Step("Проверка заголовка страницы поиска товаров")
+  //  @Step("Проверка заголовка страницы поиска товаров")
     public SearchListPage checkSearchPageH1() {
         wait.until(ExpectedConditions.visibilityOf(h1));
         pageUtils.assertElementVisibility(h1, "Не обнаружен заголовок страницы поиска товара");

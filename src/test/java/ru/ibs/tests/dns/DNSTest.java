@@ -1,9 +1,7 @@
 package ru.ibs.tests.dns;
 
-import io.qameta.allure.Description;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 import ru.ibs.myframework.managers.PageManager;
@@ -16,7 +14,7 @@ public class DNSTest extends Base {
     @ParameterizedTest
     @CsvFileSource(resources = "fields.csv")
     @DisplayName("DNS Site test")
-    @Description("DNS Site goods test and validation")
+    //@Description("DNS Site goods test and validation")
     public void DNS(String item1, String item2, int warranty, int times){
         PageManager.getInstance().getPage(SearchFieldPage.class)
                 .fillSearch(item1)

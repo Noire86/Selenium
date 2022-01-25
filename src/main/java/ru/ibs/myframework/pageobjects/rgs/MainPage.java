@@ -1,6 +1,5 @@
 package ru.ibs.myframework.pageobjects.rgs;
 
-import io.qameta.allure.Step;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import ru.ibs.myframework.pageobjects.BasePage;
@@ -13,7 +12,7 @@ public class MainPage extends BasePage {
     private List<WebElement> navMenu;
 
 
-    @Step("Тест")
+  //  @Step("Тест")
     public CompaniesPage selectNavMenu(String btnText) {
         pageUtils.clickItemFromList(btnText, navMenu);
         return pageManager.getPage(CompaniesPage.class);

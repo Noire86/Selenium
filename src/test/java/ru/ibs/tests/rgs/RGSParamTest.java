@@ -1,6 +1,5 @@
 package ru.ibs.tests.rgs;
 
-import io.qameta.allure.Description;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
@@ -13,7 +12,7 @@ public class RGSParamTest extends Base {
 
     @ParameterizedTest
     @CsvFileSource(resources = "fields.csv")
-    @Description("RGSTest Params")
+    // @Description("RGSTest Params")
     @DisplayName("Parametrized rgs test")
     public void test(String name, String phone, String email, String region) { //укажем какие параметры мы должны передавать при каждой итерации
 
