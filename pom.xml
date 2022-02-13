@@ -17,7 +17,7 @@
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
 
         <aspectj.version>1.8.10</aspectj.version>
-        <allure-junit5.version>2.17.2</allure-junit5.version>
+        <allure-junit5.version>2.13.7</allure-junit5.version>
 
 
         <encoding.type>UTF-8</encoding.type>
