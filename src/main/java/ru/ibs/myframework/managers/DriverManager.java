@@ -5,9 +5,14 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.opera.OperaDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import ru.ibs.myframework.pageobjects.dns.models.handlers.ProductHandler;
 import ru.ibs.myframework.util.PropertyKey;
+
+import java.net.MalformedURLException;
+import java.net.URI;
 
 
 public final class DriverManager {
@@ -93,6 +98,17 @@ public final class DriverManager {
             case "firefox":
                 System.setProperty("webdriver.firefox.driver", driverPath + browser + "driver" + extension);
                 return new FirefoxDriver();
+            case "remote":
+                DesiredCapabilities capabilities = new DesiredCapabilities();
+                capabilities.setBrowserName("chrome");
+                capabilities.setVersion("73.0");
+                capabilities.setCapability("enableVNC", true);
+                capabilities.setCapability("enableVideo", false);
+                try {
+                    return new RemoteWebDriver(URI.create("http://selenoid.appline.ru:4445/wd/hub").toURL(), capabilities);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
             case "chrome":
             default:
                 System.setProperty("webdriver.chrome.driver", driverPath + browser + "driver" + extension);
