@@ -13,7 +13,7 @@ pipeline {
         }
         stage('Run Tests') {
             steps {
-                sh "${mvn} test -Dtests=\"${params.TAG}\""
+                sh "${mvn} test -Dtest=\"${params.TAG}\""
             }
         }
         stage('Allure Report Generation') {
